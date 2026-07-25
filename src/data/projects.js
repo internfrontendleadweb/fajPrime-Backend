@@ -28,7 +28,7 @@ export const projects = [
     description:
       "A boutique 12-unit luxury apartment building delivered to exacting international finishing standards.",
     amenities: ["Gym", "Concierge", "Rooftop Terrace"],
-    images: ["/src/assets/images/projects/prime-court-1.jpg"],
+    images: ["/src/assets/images/projects/prime-court-1.avif"],
   },
   {
     id: "prj-003",
@@ -43,7 +43,7 @@ export const projects = [
     description:
       "Ten fully detached duplexes in Maitama, delivered with premium interior finishing and landscaped grounds.",
     amenities: ["24/7 Power", "Estate Security", "BQ"],
-    images: ["/src/assets/images/projects/faj-heights-abuja-1.jpg"],
+    images: ["/src/assets/images/projects/faj-heights-abuja-1.jpeg"],
   },
 
   // CURRENT
@@ -60,7 +60,7 @@ export const projects = [
     description:
       "A striking 24-unit residential tower under construction in Ikoyi, offering resort-style amenities and panoramic lagoon views.",
     amenities: ["Rooftop Lounge", "Pool", "Gym", "Smart Access"],
-    images: ["/src/assets/images/projects/faj-prime-heights-1.jpg"],
+    images: ["/src/assets/images/projects/faj-prime-heights-1.jpeg"],
   },
   {
     id: "prj-005",
@@ -74,7 +74,12 @@ export const projects = [
     units: 32,
     description:
       "A 32-unit gated estate currently under construction, offering a mix of terrace and semi-detached duplexes along the Lekki waterfront corridor.",
-    amenities: ["Waterfront Access", "Estate Security", "Clubhouse", "Children's Park"],
+    amenities: [
+      "Waterfront Access",
+      "Estate Security",
+      "Clubhouse",
+      "Children's Park",
+    ],
     images: ["/src/assets/images/projects/lekki-waterview-1.jpg"],
   },
   {
@@ -90,7 +95,7 @@ export const projects = [
     description:
       "An exclusive enclave of 8 grand detached duplexes rising in Asokoro, designed for Abuja's most discerning homeowners.",
     amenities: ["Swimming Pool", "BQ", "24/7 Power", "Security"],
-    images: ["/src/assets/images/projects/asokoro-grand-1.jpg"],
+    images: ["/src/assets/images/projects/asokoro-grand-1.jpeg"],
   },
 
   // FUTURE
@@ -121,7 +126,12 @@ export const projects = [
     units: 120,
     description:
       "A planned 120-unit smart-home community in Ajah, designed around sustainability, technology integration and affordable luxury.",
-    amenities: ["Smart Home Tech", "Solar Power", "Estate Security", "Green Spaces"],
+    amenities: [
+      "Smart Home Tech",
+      "Solar Power",
+      "Estate Security",
+      "Green Spaces",
+    ],
     images: ["/src/assets/images/projects/ajah-smart-city-1.jpg"],
   },
   {
