@@ -7,7 +7,7 @@ export const blogPosts = [
     date: "2026-06-12",
     readTime: "5 min",
     author: "Grace Effiong",
-    image: "/src/assets/images/blog/lekki-market.jpg",
+    image: "/src/assets/images/blog/lekki-market.webp",
     excerpt:
       "Lekki's transformation into Lagos's premier residential and commercial corridor continues to accelerate. Here's what's driving the surge.",
     content:
@@ -21,7 +21,7 @@ export const blogPosts = [
     date: "2026-05-28",
     readTime: "6 min",
     author: "Emeka Obi",
-    image: "/src/assets/images/blog/off-plan-vs-completed.jpg",
+    image: "/src/assets/images/blog/off-plan-vs-completed.webp",
     excerpt:
       "Both options come with distinct advantages and trade-offs. Here's how to decide which fits your goals and risk appetite.",
     content:
@@ -35,7 +35,7 @@ export const blogPosts = [
     date: "2026-05-10",
     readTime: "7 min",
     author: "Segun Alade",
-    image: "/src/assets/images/blog/diaspora-investment.jpg",
+    image: "/src/assets/images/blog/diaspora-investment.webp",
     excerpt:
       "Investing from abroad comes with unique challenges. Here's how Nigerians in the diaspora can invest confidently and remotely.",
     content:
@@ -49,7 +49,7 @@ export const blogPosts = [
     date: "2026-04-22",
     readTime: "5 min",
     author: "Barrister Femi Coker",
-    image: "/src/assets/images/blog/governors-consent.jpg",
+    image: "/src/assets/images/blog/governors-consent.webp",
     excerpt:
       "Governor's Consent is one of the most misunderstood aspects of Nigerian property law. Here's a clear breakdown.",
     content:
@@ -63,7 +63,7 @@ export const blogPosts = [
     date: "2026-04-05",
     readTime: "4 min",
     author: "Grace Effiong",
-    image: "/src/assets/images/blog/neighborhood-boom.jpg",
+    image: "/src/assets/images/blog/neighborhood-boom.webp",
     excerpt:
       "Smart investors spot emerging neighborhoods before prices catch up. Here's what to look for.",
     content:
@@ -77,7 +77,7 @@ export const blogPosts = [
     date: "2026-03-18",
     readTime: "6 min",
     author: "Segun Alade",
-    image: "/src/assets/images/blog/home-financing.jpg",
+    image: "/src/assets/images/blog/home-financing.webp",
     excerpt:
       "From mortgages to developer payment plans, here's a breakdown of the financing options available to first-time buyers.",
     content:
@@ -91,7 +91,7 @@ export const blogPosts = [
     date: "2026-02-27",
     readTime: "5 min",
     author: "Chuka Ibe",
-    image: "/src/assets/images/blog/smart-homes.jpg",
+    image: "/src/assets/images/blog/smart-homes.webp",
     excerpt:
       "Smart home technology is quickly moving from a luxury add-on to a standard buyer expectation. Here's why.",
     content:
@@ -105,7 +105,7 @@ export const blogPosts = [
     date: "2026-01-30",
     readTime: "6 min",
     author: "Emeka Obi",
-    image: "/src/assets/images/blog/vi-commercial-outlook.jpg",
+    image: "/src/assets/images/blog/vi-commercial-outlook.webp",
     excerpt:
       "Grade-A office demand in Victoria Island continues to outpace supply. Here's what this means for investors and occupiers.",
     content:
