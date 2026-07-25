@@ -22,9 +22,23 @@ export default function TestimonialsCarousel() {
 
   return (
     <section className="relative py-section-lg bg-navy-900 overflow-hidden">
-      <svg className="absolute inset-0 w-full h-full opacity-[0.04]" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-        <pattern id="testimonialPattern" width="44" height="44" patternUnits="userSpaceOnUse">
-          <path d="M22 0L44 22L22 44L0 22Z" fill="none" stroke="#D4AF37" strokeWidth="1" />
+      <svg
+        className="absolute inset-0 w-full h-full opacity-[0.04]"
+        aria-hidden="true"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <pattern
+          id="testimonialPattern"
+          width="44"
+          height="44"
+          patternUnits="userSpaceOnUse"
+        >
+          <path
+            d="M22 0L44 22L22 44L0 22Z"
+            fill="none"
+            stroke="#D4AF37"
+            strokeWidth="1"
+          />
         </pattern>
         <rect width="100%" height="100%" fill="url(#testimonialPattern)" />
       </svg>
@@ -86,7 +100,11 @@ export default function TestimonialsCarousel() {
               <Star
                 key={i}
                 size={14}
-                className={i < active.rating ? "fill-gold-500 text-gold-500" : "text-white/15"}
+                className={
+                  i < active.rating
+                    ? "fill-gold-500 text-gold-500"
+                    : "text-white/15"
+                }
               />
             ))}
           </div>
@@ -98,8 +116,12 @@ export default function TestimonialsCarousel() {
               className="w-11 h-11 rounded-full object-cover bg-white/10 border border-gold-500/40"
             />
             <div className="text-left">
-              <p className="text-small font-semibold text-white tracking-wide">{active.name}</p>
-              <p className="text-[12px] text-white/45 uppercase tracking-wider mt-0.5">{active.location}</p>
+              <p className="text-small font-semibold text-white tracking-wide">
+                {active.name}
+              </p>
+              <p className="text-[12px] text-white/45 uppercase tracking-wider mt-0.5">
+                {active.location}
+              </p>
             </div>
           </div>
 
@@ -118,7 +140,10 @@ export default function TestimonialsCarousel() {
                     key={progressKey}
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
-                    transition={{ duration: AUTOPLAY_MS / 1000, ease: "linear" }}
+                    transition={{
+                      duration: AUTOPLAY_MS / 1000,
+                      ease: "linear",
+                    }}
                     className="absolute inset-y-0 left-0 bg-gold-500 rounded-full"
                   />
                 )}
