@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import { CalendarCheck, Users, ShieldCheck, MapPinned } from "lucide-react";
 import Button from "../ui/Button.jsx";
-import { slideInLeft, slideInRight, staggerContainer, fadeInUp } from "../../animations/variants.js";
+import {
+  slideInLeft,
+  slideInRight,
+  staggerContainer,
+  fadeInUp,
+} from "../../animations/variants.js";
 
 const benefits = [
   { icon: CalendarCheck, text: "Flexible scheduling around your availability" },
@@ -38,8 +43,8 @@ export default function SiteInspectionCTA() {
             Book a guided site inspection today
           </h2>
           <p className="text-body-lg text-slate-500 mt-4">
-            Experience a property firsthand with a member of our team. No pressure, just clarity
-            before you commit.
+            Experience a property firsthand with a member of our team. No
+            pressure, just clarity before you commit.
           </p>
 
           <motion.div
@@ -50,7 +55,11 @@ export default function SiteInspectionCTA() {
             className="space-y-4 mt-8"
           >
             {benefits.map((b) => (
-              <motion.div key={b.text} variants={fadeInUp} className="flex items-center gap-3">
+              <motion.div
+                key={b.text}
+                variants={fadeInUp}
+                className="flex items-center gap-3"
+              >
                 <div className="w-9 h-9 rounded-full bg-gold-50 text-gold-600 flex items-center justify-center flex-shrink-0">
                   <b.icon size={16} />
                 </div>
