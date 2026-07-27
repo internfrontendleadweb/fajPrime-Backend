@@ -44,7 +44,7 @@ export default function About() {
         title="Building Trust. Delivering Value."
         subtitle={siteConfig.secondaryTagline}
         breadcrumbItems={[{ label: "About" }]}
-        backgroundImage="/images/hero/about-hero.jpg"
+        backgroundImage="/images/hero/about-hero.webp"
       />
 
       {/* Our Story */}
@@ -57,7 +57,7 @@ export default function About() {
             variants={slideInLeft}
           >
             <img
-              src="/images/hero/about-story.jpg"
+              src="/images/hero/about-story.webp"
               alt="FAJ Prime team on site"
               className="rounded-lg w-full aspect-[4/5] object-cover"
               loading="lazy"
@@ -244,7 +244,7 @@ export default function About() {
             <p className="text-body-lg text-slate-500 mt-6 leading-relaxed">{companyStory.about}</p>
           </div>
           <img
-            src="/images/hero/company-culture.jpg"
+            src="/images/hero/company-culture.webp"
             alt="FAJ Prime team culture"
             className="rounded-lg w-full aspect-[4/3] object-cover"
             loading="lazy"

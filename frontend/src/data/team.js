@@ -6,7 +6,7 @@ export const team = [
     name: "Adeola Faj-Johnson",
     role: "Chairman / Founder",
     bio: "With over 20 years in real estate and infrastructure development, Adeola founded FAJ Prime Estates to bring institutional-grade professionalism to Nigeria's property market.",
-    image: "/images/team/adeola-faj-johnson.jpg",
+    image: "/images/team/adeola-faj-johnson.webp",
     linkedin: "https://linkedin.com/in/adeolafajjohnson",
   },
   {
@@ -15,7 +15,7 @@ export const team = [
     name: "Dr. Kunle Adebayo",
     role: "Vice Chairman",
     bio: "A seasoned economist and urban planner, Dr. Adebayo guides FAJ Prime's strategic direction and market expansion.",
-    image: "/images/team/kunle-adebayo.jpg",
+    image: "/images/team/kunle-adebayo.webp",
     linkedin: "https://linkedin.com/in/kunleadebayo",
   },
   {
@@ -24,7 +24,7 @@ export const team = [
     name: "Amara Nwachukwu",
     role: "Non-Executive Director",
     bio: "Amara brings deep capital markets expertise, having spent over a decade advising real estate investment vehicles across West Africa.",
-    image: "/images/team/amara-nwachukwu.jpg",
+    image: "/images/team/amara-nwachukwu.webp",
     linkedin: "https://linkedin.com/in/amaranwachukwu",
   },
   {
@@ -33,7 +33,7 @@ export const team = [
     name: "Barrister Femi Coker",
     role: "Legal Director",
     bio: "Femi oversees legal governance and regulatory compliance across all FAJ Prime transactions and developments.",
-    image: "/images/team/femi-coker.jpg",
+    image: "/images/team/femi-coker.webp",
     linkedin: "https://linkedin.com/in/femicoker",
   },
 
@@ -44,7 +44,7 @@ export const team = [
     name: "Emeka Obi",
     role: "Head of Sales",
     bio: "Emeka leads the sales function, having closed over ₦15 billion in property transactions across his career.",
-    image: "/images/team/emeka-obi.jpg",
+    image: "/images/team/emeka-obi.webp",
     linkedin: "https://linkedin.com/in/emekaobi",
   },
   {
@@ -53,7 +53,7 @@ export const team = [
     name: "Halima Bello",
     role: "Head of Property Management",
     bio: "Halima ensures every managed property under FAJ Prime delivers consistent value and service excellence to owners and tenants alike.",
-    image: "/images/team/halima-bello.jpg",
+    image: "/images/team/halima-bello.webp",
     linkedin: "https://linkedin.com/in/halimabello",
   },
   {
@@ -62,7 +62,7 @@ export const team = [
     name: "Chuka Ibe",
     role: "Head of Construction",
     bio: "A civil engineer by training, Chuka oversees on-site execution and quality assurance for every FAJ Prime development.",
-    image: "/images/team/chuka-ibe.jpg",
+    image: "/images/team/chuka-ibe.webp",
     linkedin: "https://linkedin.com/in/chukaibe",
   },
   {
@@ -71,7 +71,7 @@ export const team = [
     name: "Grace Effiong",
     role: "Head of Marketing",
     bio: "Grace drives brand strategy and market positioning, sharpening FAJ Prime's identity as a premium real estate name.",
-    image: "/images/team/grace-effiong.jpg",
+    image: "/images/team/grace-effiong.webp",
     linkedin: "https://linkedin.com/in/graceeffiong",
   },
   {
@@ -80,7 +80,7 @@ export const team = [
     name: "Segun Alade",
     role: "Head of Finance",
     bio: "Segun manages financial planning and investment structuring, ensuring disciplined capital allocation across all projects.",
-    image: "/images/team/segun-alade.jpg",
+    image: "/images/team/segun-alade.webp",
     linkedin: "https://linkedin.com/in/segunalade",
   },
   {
@@ -89,7 +89,7 @@ export const team = [
     name: "Ifeoma Chukwu",
     role: "Head of Customer Experience",
     bio: "Ifeoma leads client relations, ensuring every buyer and tenant journey with FAJ Prime feels seamless and personal.",
-    image: "/images/team/ifeoma-chukwu.jpg",
+    image: "/images/team/ifeoma-chukwu.webp",
     linkedin: "https://linkedin.com/in/ifeomachukwu",
   },
 ];

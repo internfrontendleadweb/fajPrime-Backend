@@ -40,7 +40,7 @@ export default function Projects() {
         title="Our Projects"
         subtitle="A portfolio of developments: delivered, underway and on the horizon."
         breadcrumbItems={[{ label: "Projects" }]}
-        backgroundImage="/images/hero/projects-hero.jpg"
+        backgroundImage="/images/hero/projects-hero.webp"
       />
 
       <section className="py-section-lg bg-white">

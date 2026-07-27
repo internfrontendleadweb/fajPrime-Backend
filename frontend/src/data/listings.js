@@ -128,7 +128,7 @@ export const listings = [
     description:
       "Dry, fenced land with governor's consent in a fast-developing corridor of Ajah, offering an excellent entry point for investors.",
     amenities: ["Governor's Consent", "Fenced", "Dry Land"],
-    images: ["/images/properties/ajah-land-1.jpg"],
+    images: ["/images/properties/ajah-land-1.webp"],
   },
   {
     id: "lst-006",
@@ -182,7 +182,7 @@ export const listings = [
       "Fiber Internet",
       "Elevator",
     ],
-    images: ["/images/properties/vi-office-1.jpg"],
+    images: ["/images/properties/vi-office-1.webp"],
   },
   // {
   //   id: "lst-008",
@@ -222,7 +222,7 @@ export const listings = [
     description:
       "Elegant terrace living within a diplomatic-zone-adjacent estate, finished to an exceptional standard throughout.",
     amenities: ["Estate Security", "Gym", "24/7 Power"],
-    images: ["/images/properties/asokoro-terrace-1.jpg"],
+    images: ["/images/properties/asokoro-terrace-1.webp"],
   },
   {
     id: "lst-010",
@@ -242,7 +242,7 @@ export const listings = [
     description:
       "A modern apartment in Port Harcourt's premier residential district, offering privacy, security and easy city access.",
     amenities: ["Backup Power", "Security", "Parking"],
-    images: ["/images/properties/ph-apartment-1.jpg"],
+    images: ["/images/properties/ph-apartment-1.webp"],
   },
   {
     id: "lst-011",
@@ -282,7 +282,7 @@ export const listings = [
     description:
       "Expansive waterfront land parcel ideal for a private estate or boutique development, with clean title documentation.",
     amenities: ["Waterfront", "Governor's Consent"],
-    images: ["/images/properties/epe-land-1.jpg"],
+    images: ["/images/properties/epe-land-1.webp"],
   },
   {
     id: "lst-013",
@@ -322,7 +322,7 @@ export const listings = [
     description:
       "An affordable entry into duplex living within a secure, family-friendly estate close to major amenities.",
     amenities: ["Estate Security", "24/7 Power", "Parking"],
-    images: ["/images/properties/ajah-duplex-1.jpg"],
+    images: ["/images/properties/ajah-duplex-1.webp"],
   },
 ];
 

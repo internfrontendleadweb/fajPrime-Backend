@@ -52,7 +52,7 @@ export default function Blog() {
         title="Insights & News"
         subtitle="Market trends, buying guides and stories from the world of Nigerian real estate."
         breadcrumbItems={[{ label: "Blog" }]}
-        backgroundImage="/images/hero/blog-hero.jpg"
+        backgroundImage="/images/hero/blog-hero.webp"
       />
 
       {/* Featured Article */}
