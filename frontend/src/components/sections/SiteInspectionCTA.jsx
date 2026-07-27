@@ -26,9 +26,11 @@ export default function SiteInspectionCTA() {
           variants={slideInLeft}
         >
           <img
-            src="/src/assets/images/hero/site-inspection.jpg"
+            src="/images/hero/site-inspection.webp"
             alt="Guided site inspection"
             className="rounded-lg w-full aspect-[4/3] object-cover"
+            loading="lazy"
+            decoding="async"
           />
         </motion.div>
 

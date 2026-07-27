@@ -6,7 +6,7 @@ export const testimonials = [
     rating: 5,
     review:
       "FAJ Prime made buying my first property seamless and stress-free from start to finish. Their team was patient, transparent and genuinely invested in finding the right home for me.",
-    image: "/src/assets/images/team/testimonial-chiamaka.webp",
+    image: "/images/team/testimonial-chiamaka.webp",
   },
   {
     id: "tst-02",
@@ -15,7 +15,7 @@ export const testimonials = [
     rating: 5,
     review:
       "As a diaspora investor, I was nervous about buying property remotely. FAJ Prime's virtual inspection and documentation support gave me full confidence in the process.",
-    image: "/src/assets/images/team/testimonial-david.webp",
+    image: "/images/team/testimonial-david.webp",
   },
   {
     id: "tst-03",
@@ -24,7 +24,7 @@ export const testimonials = [
     rating: 5,
     review:
       "The quality of construction on our Maitama duplex exceeded expectations. Every detail, from the finishing to the landscaping, reflected true premium standards.",
-    image: "/src/assets/images/team/testimonial-aisha.webp",
+    image: "/images/team/testimonial-aisha.webp",
   },
   {
     id: "tst-04",
@@ -33,7 +33,7 @@ export const testimonials = [
     rating: 4,
     review:
       "Professional agents, clear communication, and a smooth closing process. I've since referred two colleagues to FAJ Prime.",
-    image: "/src/assets/images/team/testimonial-seun.webp",
+    image: "/images/team/testimonial-seun.webp",
   },
   {
     id: "tst-05",
@@ -42,7 +42,7 @@ export const testimonials = [
     rating: 5,
     review:
       "I appreciated how honest the team was about the property's condition and documentation status. No pressure, just genuine guidance.",
-    image: "/src/assets/images/team/testimonial-blessing.webp",
+    image: "/images/team/testimonial-blessing.webp",
   },
   {
     id: "tst-06",
@@ -51,6 +51,6 @@ export const testimonials = [
     rating: 5,
     review:
       "FAJ Prime's property management team has kept our rental units consistently occupied with reliable tenants. Excellent ongoing service.",
-    image: "/src/assets/images/team/testimonial-emmanuel.webp",
+    image: "/images/team/testimonial-emmanuel.webp",
   },
 ];

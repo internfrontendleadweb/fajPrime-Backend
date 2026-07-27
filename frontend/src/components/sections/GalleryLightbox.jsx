@@ -20,7 +20,7 @@ export default function GalleryLightbox({ images = [], title = "Gallery" }) {
           onClick={() => setOpen(true)}
           className="col-span-2 row-span-2 relative group overflow-hidden"
         >
-          <img src={images[0]} alt={title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <img src={images[0]} alt={title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
         </button>
         {images.slice(1, 5).map((img, i) => (
           <button
@@ -28,7 +28,7 @@ export default function GalleryLightbox({ images = [], title = "Gallery" }) {
             onClick={() => setOpen(true)}
             className="relative group overflow-hidden hidden sm:block"
           >
-            <img src={img} alt={`${title} ${i + 2}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <img src={img} alt={`${title} ${i + 2}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
             {i === 3 && images.length > 5 && (
               <span className="absolute inset-0 bg-navy-900/60 flex items-center justify-center text-white font-semibold text-small">
                 +{images.length - 5} more
@@ -53,7 +53,7 @@ export default function GalleryLightbox({ images = [], title = "Gallery" }) {
         >
           {images.map((img, i) => (
             <SwiperSlide key={i}>
-              <img src={img} alt={`${title} ${i + 1}`} className="w-full h-full object-contain bg-navy-950" />
+              <img src={img} alt={`${title} ${i + 1}`} className="w-full h-full object-contain bg-navy-950" loading="lazy" decoding="async" />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -68,7 +68,7 @@ export default function GalleryLightbox({ images = [], title = "Gallery" }) {
         >
           {images.map((img, i) => (
             <SwiperSlide key={i} className="!h-16 rounded overflow-hidden cursor-pointer opacity-50 hover:opacity-100 transition-opacity">
-              <img src={img} alt="" className="w-full h-full object-cover" />
+              <img src={img} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
             </SwiperSlide>
           ))}
         </Swiper>

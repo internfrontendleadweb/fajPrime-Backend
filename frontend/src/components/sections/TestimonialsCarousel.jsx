@@ -114,6 +114,8 @@ export default function TestimonialsCarousel() {
               src={active.image}
               alt={active.name}
               className="w-11 h-11 rounded-full object-cover bg-white/10 border border-gold-500/40"
+              loading="lazy"
+              decoding="async"
             />
             <div className="text-left">
               <p className="text-small font-semibold text-white tracking-wide">

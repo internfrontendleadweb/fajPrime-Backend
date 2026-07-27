@@ -6,12 +6,12 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 
 export default function HeroMedia({
-  videoSrc = "/src/assets/images/hero/hero.mp4",
-  posterImage = "/src/assets/images/hero/apartment.png",
+  videoSrc = "/images/hero/hero.mp4",
+  posterImage = "/images/hero/apartment.webp",
   images = [
-    "/src/assets/images/hero/home-hero-1.png",
-    "/src/assets/images/hero/home-hero-2.png",
-    "/src/assets/images/hero/home-hero-3.png",
+    "/images/hero/home-hero-1.webp",
+    "/images/hero/home-hero-2.webp",
+    "/images/hero/home-hero-3.webp",
   ],
 }) {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -28,7 +28,13 @@ export default function HeroMedia({
   // Reduced motion (any viewport): static poster only, no autoplay/animation.
   if (reducedMotion) {
     return (
-      <img src={posterImage} alt="" className="w-full h-full object-cover" />
+      <img
+        src={posterImage}
+        alt=""
+        className="w-full h-full object-cover"
+        loading="eager"
+        fetchpriority="high"
+      />
     );
   }
 

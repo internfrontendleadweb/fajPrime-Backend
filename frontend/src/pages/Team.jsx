@@ -25,7 +25,7 @@ export default function Team() {
         title="Our Team"
         subtitle="The people behind FAJ Prime's commitment to trust, value and lasting legacies."
         breadcrumbItems={[{ label: "Team" }]}
-        backgroundImage="/src/assets/images/hero/team-hero.jpg"
+        backgroundImage="/images/hero/team-hero.jpg"
       />
 
       {/* Board of Directors */}

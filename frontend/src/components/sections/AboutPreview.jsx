@@ -31,9 +31,11 @@ export default function AboutPreview() {
           className="relative"
         >
           <img
-            src="/src/assets/images/hero/handover.jpg"
+            src="/images/hero/handover.webp"
             alt="FAJ Prime development"
             className="rounded-lg w-full aspect-[4/5] object-cover"
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute -bottom-8 -right-8 bg-navy-900 rounded-lg p-6 shadow-elevated hidden md:block max-w-[220px]">
             <p className="font-serif text-h2 text-gold-400">8+</p>

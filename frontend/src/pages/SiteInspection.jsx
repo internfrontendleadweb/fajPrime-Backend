@@ -77,7 +77,7 @@ export default function SiteInspection() {
         title="Book a Site Inspection"
         subtitle="See it before you decide. Schedule a guided tour of any property in our portfolio."
         breadcrumbItems={[{ label: "Site Inspection" }]}
-        backgroundImage="/src/assets/images/hero/site-inspection-hero.jpg"
+        backgroundImage="/images/hero/site-inspection-hero.jpg"
       />
 
       {/* Benefits */}

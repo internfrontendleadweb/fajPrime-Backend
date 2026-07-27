@@ -22,7 +22,7 @@ export default function EditorialShowcase({ items, dark = false }) {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="absolute inset-0"
           >
-            <img src={active.image} alt={active.title} className="w-full h-full object-cover" />
+            <img src={active.image} alt={active.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-navy-900/10 to-transparent" />
           </motion.div>
         </AnimatePresence>

@@ -44,7 +44,7 @@ export default function Contact() {
         title="Contact Us"
         subtitle="We'd love to hear from you. Reach out through any channel below."
         breadcrumbItems={[{ label: "Contact" }]}
-        backgroundImage="/src/assets/images/hero/contact-hero.jpg"
+        backgroundImage="/images/hero/contact-hero.jpg"
       />
 
       {/* Contact Cards */}

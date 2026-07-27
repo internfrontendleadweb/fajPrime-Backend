@@ -22,7 +22,7 @@ export default function Services() {
         title="Our Services"
         subtitle="End-to-end real estate expertise, from land acquisition to long-term property management."
         breadcrumbItems={[{ label: "Services" }]}
-        backgroundImage="/src/assets/images/hero/services-hero.jpg"
+        backgroundImage="/images/hero/services-hero.jpg"
       />
 
       <section className="py-section-lg bg-white">

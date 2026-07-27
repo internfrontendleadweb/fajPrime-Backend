@@ -58,7 +58,7 @@ export default function Listings() {
         title="Property Listings"
         subtitle="Search our full portfolio of verified, title-clean properties across Nigeria."
         breadcrumbItems={[{ label: "Listings" }]}
-        backgroundImage="/src/assets/images/hero/listings-hero.jpg"
+        backgroundImage="/images/hero/listings-hero.jpg"
       />
 
       <section className="py-16 bg-white">

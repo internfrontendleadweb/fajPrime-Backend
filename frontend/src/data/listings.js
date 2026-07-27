@@ -25,9 +25,9 @@ export const listings = [
       "CCTV",
     ],
     images: [
-      "/src/assets/images/properties/ikoyi-duplex-1.jpg",
-      "/src/assets/images/properties/ikoyi-duplex-2.jpg",
-      "/src/assets/images/properties/ikoyi-duplex-3.jpg",
+      "/images/properties/ikoyi-duplex-1.webp",
+      "/images/properties/ikoyi-duplex-2.webp",
+      "/images/properties/ikoyi-duplex-3.webp",
     ],
   },
   {
@@ -55,8 +55,8 @@ export const listings = [
       "Backup Power",
     ],
     images: [
-      "/src/assets/images/properties/vi-apartment-1.webp",
-      "/src/assets/images/properties/vi-apartment-2.webp",
+      "/images/properties/vi-apartment-1.webp",
+      "/images/properties/vi-apartment-2.webp",
     ],
   },
   {
@@ -83,8 +83,8 @@ export const listings = [
       "Parking",
     ],
     images: [
-      "/src/assets/images/properties/lekki-terrace-1.webp",
-      "/src/assets/images/properties/lekki-terrace-2.webp",
+      "/images/properties/lekki-terrace-1.webp",
+      "/images/properties/lekki-terrace-2.webp",
     ],
   },
   {
@@ -106,8 +106,8 @@ export const listings = [
       "A comfortable, well-serviced apartment ideal for young professionals, located minutes from the Lekki-Epe expressway.",
     amenities: ["Serviced", "24/7 Power", "Water Treatment", "Security"],
     images: [
-      "/src/assets/images/properties/ajah-apartment-1.webp",
-      "/src/assets/images/properties/ajah-apartment-2.webp",
+      "/images/properties/ajah-apartment-1.webp",
+      "/images/properties/ajah-apartment-2.webp",
     ],
   },
   {
@@ -128,7 +128,7 @@ export const listings = [
     description:
       "Dry, fenced land with governor's consent in a fast-developing corridor of Ajah, offering an excellent entry point for investors.",
     amenities: ["Governor's Consent", "Fenced", "Dry Land"],
-    images: ["/src/assets/images/properties/ajah-land-1.jpg"],
+    images: ["/images/properties/ajah-land-1.jpg"],
   },
   {
     id: "lst-006",
@@ -155,8 +155,8 @@ export const listings = [
       "BQ",
     ],
     images: [
-      "/src/assets/images/properties/ikoyi-mansion-1.webp",
-      "/src/assets/images/properties/ikoyi-mansion-2.webp",
+      "/images/properties/ikoyi-mansion-1.webp",
+      "/images/properties/ikoyi-mansion-2.webp",
     ],
   },
   {
@@ -182,7 +182,7 @@ export const listings = [
       "Fiber Internet",
       "Elevator",
     ],
-    images: ["/src/assets/images/properties/vi-office-1.jpg"],
+    images: ["/images/properties/vi-office-1.jpg"],
   },
   // {
   //   id: "lst-008",
@@ -202,7 +202,7 @@ export const listings = [
   //   description:
   //     "Located in one of Abuja's most prestigious districts, this duplex combines classic architecture with modern comfort.",
   //   amenities: ["BQ", "Swimming Pool", "24/7 Power", "Security"],
-  //   images: ["/src/assets/images/properties/maitama-duplex-1.webp"],
+  //   images: ["/images/properties/maitama-duplex-1.webp"],
   // },
   {
     id: "lst-009",
@@ -222,7 +222,7 @@ export const listings = [
     description:
       "Elegant terrace living within a diplomatic-zone-adjacent estate, finished to an exceptional standard throughout.",
     amenities: ["Estate Security", "Gym", "24/7 Power"],
-    images: ["/src/assets/images/properties/asokoro-terrace-1.jpg"],
+    images: ["/images/properties/asokoro-terrace-1.jpg"],
   },
   {
     id: "lst-010",
@@ -242,7 +242,7 @@ export const listings = [
     description:
       "A modern apartment in Port Harcourt's premier residential district, offering privacy, security and easy city access.",
     amenities: ["Backup Power", "Security", "Parking"],
-    images: ["/src/assets/images/properties/ph-apartment-1.jpg"],
+    images: ["/images/properties/ph-apartment-1.jpg"],
   },
   {
     id: "lst-011",
@@ -262,7 +262,7 @@ export const listings = [
     description:
       "Secure early-bird pricing on this off-plan development featuring resort-style amenities, set for completion in 2027.",
     amenities: ["Swimming Pool", "Gym", "Rooftop Lounge", "Smart Home"],
-    images: ["/src/assets/images/properties/lekki-offplan-1.png"],
+    images: ["/images/properties/lekki-offplan-1.webp"],
   },
   {
     id: "lst-012",
@@ -282,7 +282,7 @@ export const listings = [
     description:
       "Expansive waterfront land parcel ideal for a private estate or boutique development, with clean title documentation.",
     amenities: ["Waterfront", "Governor's Consent"],
-    images: ["/src/assets/images/properties/epe-land-1.jpg"],
+    images: ["/images/properties/epe-land-1.jpg"],
   },
   {
     id: "lst-013",
@@ -302,7 +302,7 @@ export const listings = [
     description:
       "A statement penthouse offering panoramic Lagos skyline views, private lift access and a wraparound terrace.",
     amenities: ["Private Lift", "Terrace", "Concierge", "Smart Home"],
-    images: ["/src/assets/images/properties/vi-penthouse-1.webp"],
+    images: ["/images/properties/vi-penthouse-1.webp"],
   },
   {
     id: "lst-014",
@@ -322,7 +322,7 @@ export const listings = [
     description:
       "An affordable entry into duplex living within a secure, family-friendly estate close to major amenities.",
     amenities: ["Estate Security", "24/7 Power", "Parking"],
-    images: ["/src/assets/images/properties/ajah-duplex-1.jpg"],
+    images: ["/images/properties/ajah-duplex-1.jpg"],
   },
 ];
 

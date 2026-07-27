@@ -52,7 +52,7 @@ export default function Blog() {
         title="Insights & News"
         subtitle="Market trends, buying guides and stories from the world of Nigerian real estate."
         breadcrumbItems={[{ label: "Blog" }]}
-        backgroundImage="/src/assets/images/hero/blog-hero.jpg"
+        backgroundImage="/images/hero/blog-hero.jpg"
       />
 
       {/* Featured Article */}
@@ -67,6 +67,8 @@ export default function Blog() {
                 src={featured.image}
                 alt={featured.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div className="p-8 lg:pr-12">
@@ -159,6 +161,8 @@ export default function Blog() {
                       src={post.image}
                       alt={post.title}
                       className="w-16 h-16 rounded object-cover flex-shrink-0 bg-slate-100"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div>
                       <p className="text-small font-medium text-navy-900 leading-snug group-hover:text-gold-600 transition-colors line-clamp-2">

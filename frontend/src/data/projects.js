@@ -13,7 +13,7 @@ export const projects = [
     description:
       "A gated community of 18 contemporary terrace duplexes, fully sold out and delivered on schedule, now a thriving residential enclave.",
     amenities: ["Estate Security", "Children's Park", "Clubhouse"],
-    images: ["/src/assets/images/projects/faj-gardens-1.jpg"],
+    images: ["/images/projects/faj-gardens-1.webp"],
   },
   {
     id: "prj-002",
@@ -28,7 +28,7 @@ export const projects = [
     description:
       "A boutique 12-unit luxury apartment building delivered to exacting international finishing standards.",
     amenities: ["Gym", "Concierge", "Rooftop Terrace"],
-    images: ["/src/assets/images/projects/prime-court-1.avif"],
+    images: ["/images/projects/prime-court-1.avif"],
   },
   {
     id: "prj-003",
@@ -43,7 +43,7 @@ export const projects = [
     description:
       "Ten fully detached duplexes in Maitama, delivered with premium interior finishing and landscaped grounds.",
     amenities: ["24/7 Power", "Estate Security", "BQ"],
-    images: ["/src/assets/images/projects/faj-heights-abuja-1.jpeg"],
+    images: ["/images/projects/faj-heights-abuja-1.webp"],
   },
 
   // CURRENT
@@ -60,7 +60,7 @@ export const projects = [
     description:
       "A striking 24-unit residential tower under construction in Ikoyi, offering resort-style amenities and panoramic lagoon views.",
     amenities: ["Rooftop Lounge", "Pool", "Gym", "Smart Access"],
-    images: ["/src/assets/images/projects/faj-prime-heights-1.jpeg"],
+    images: ["/images/projects/faj-prime-heights-1.webp"],
   },
   {
     id: "prj-005",
@@ -80,7 +80,7 @@ export const projects = [
       "Clubhouse",
       "Children's Park",
     ],
-    images: ["/src/assets/images/projects/lekki-waterview-1.jpg"],
+    images: ["/images/projects/lekki-waterview-1.webp"],
   },
   {
     id: "prj-006",
@@ -95,7 +95,7 @@ export const projects = [
     description:
       "An exclusive enclave of 8 grand detached duplexes rising in Asokoro, designed for Abuja's most discerning homeowners.",
     amenities: ["Swimming Pool", "BQ", "24/7 Power", "Security"],
-    images: ["/src/assets/images/projects/asokoro-grand-1.jpeg"],
+    images: ["/images/projects/asokoro-grand-1.webp"],
   },
 
   // FUTURE
@@ -112,7 +112,7 @@ export const projects = [
     description:
       "A landmark mixed-use development planned for Victoria Island, combining luxury residences with premium retail and office space.",
     amenities: ["Retail Podium", "Sky Lounge", "Gym", "Concierge"],
-    images: ["/src/assets/images/projects/vi-marina-towers-1.jpg"],
+    images: ["/images/projects/vi-marina-towers-1.webp"],
   },
   {
     id: "prj-008",
@@ -132,7 +132,7 @@ export const projects = [
       "Estate Security",
       "Green Spaces",
     ],
-    images: ["/src/assets/images/projects/ajah-smart-city-1.jpg"],
+    images: ["/images/projects/ajah-smart-city-1.webp"],
   },
   {
     id: "prj-009",
@@ -147,6 +147,6 @@ export const projects = [
     description:
       "A planned waterfront residential development in Port Harcourt's GRA, bringing FAJ Prime's signature luxury standard to the region.",
     amenities: ["Waterfront Views", "Gym", "Pool", "Security"],
-    images: ["/src/assets/images/projects/ph-waterfront-1.jpg"],
+    images: ["/images/projects/ph-waterfront-1.webp"],
   },
 ];

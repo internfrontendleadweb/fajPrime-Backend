@@ -120,6 +120,8 @@ export function InnerHero({
             src={backgroundImage}
             alt=""
             className="w-full h-full object-cover opacity-25"
+            loading="eager"
+            fetchpriority="high"
           />
           <div className="absolute inset-0 bg-gradient-navy opacity-90" />
         </div>
