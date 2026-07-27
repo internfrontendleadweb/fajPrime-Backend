@@ -6,8 +6,16 @@ Pairs with the React/Vite frontend in `../frontend`.
 ## Stack
 
 - **Runtime**: Node.js + Express
-- **Database**: PostgreSQL (via Prisma ORM)
+- **Database**: PostgreSQL (via Prisma ORM 7)
 - **Auth**: JWT — added in Section 5
+
+> **Note on Prisma 7**: This project uses Prisma's newest major version, which
+> changed how the database URL is configured. It no longer lives in
+> `prisma/schema.prisma` — it now lives in `prisma.config.mjs` at the backend
+> root, and connecting to the database at runtime requires an explicit driver
+> adapter (`@prisma/adapter-pg`), set up once in `src/config/db.js`. Both are
+> already wired up here; you don't need to change anything, just know why
+> those two files exist if you look inside them.
 
 ## Setup
 
