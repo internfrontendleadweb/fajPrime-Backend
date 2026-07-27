@@ -1,0 +1,251 @@
+// FAJ Prime Estates — Database Schema
+// Every model here maps directly to a data file your colleague already
+// mocked in the frontend (src/data/*.js) — this is what replaces those
+// files with a real, editable database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------
+// ENUMS — fixed sets of valid values. Using these instead of free-text
+// strings makes invalid data (e.g. status: "For Salee") impossible.
+// ---------------------------------------------------------------------
+
+enum ListingType {
+  APARTMENT
+  DUPLEX
+  TERRACE
+  LAND
+  COMMERCIAL
+}
+
+enum ListingStatus {
+  FOR_SALE
+  FOR_RENT
+  OFF_PLAN
+  SOLD
+  RENTED
+}
+
+enum ProjectStatus {
+  PAST
+  CURRENT
+  FUTURE
+}
+
+enum TeamGroup {
+  BOARD
+  MANAGEMENT
+}
+
+enum SubmissionStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  EDITOR
+}
+
+// ---------------------------------------------------------------------
+// PUBLIC-FACING CONTENT
+// ---------------------------------------------------------------------
+
+model Listing {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  type        ListingType
+  status      ListingStatus
+  price       Int // stored in kobo/cents-free NGN whole units — see backend/README for currency note
+  currency    String        @default("NGN")
+  location    String
+  bedrooms    Int
+  bathrooms   Int
+  parking     Int           @default(0)
+  sqm         Int
+  featured    Boolean       @default(false)
+  description String        @db.Text
+  amenities   String[]
+  images      String[]
+
+  agentId String?
+  agent   Agent?  @relation(fields: [agentId], references: [id])
+
+  inspectionBookings InspectionBooking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([type])
+}
+
+model Agent {
+  id       String    @id @default(cuid())
+  name     String
+  role     String
+  phone    String
+  email    String
+  photo    String?
+  listings Listing[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  title          String
+  status         ProjectStatus
+  location       String
+  progress       Int           @default(0) // 0-100
+  completionDate String
+  propertyType   String
+  units          Int
+  description    String        @db.Text
+  amenities      String[]
+  images         String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+model Service {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  title            String
+  icon             String // lucide-react icon name, matches frontend's existing convention
+  shortDescription String   @db.Text
+  benefits         String[]
+  process          String[]
+  faqs             Json // [{ q: string, a: string }] — small/variable-shape data, JSON fits better than a separate table here
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TeamMember {
+  id       String    @id @default(cuid())
+  group    TeamGroup
+  name     String
+  role     String
+  bio      String    @db.Text
+  image    String
+  linkedin String?
+  order    Int       @default(0) // controls display order within its group
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([group])
+}
+
+model Testimonial {
+  id       String @id @default(cuid())
+  name     String
+  location String
+  rating   Int    @default(5)
+  review   String @db.Text
+  image    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  category  String
+  title     String
+  date      DateTime
+  readTime  String
+  author    String
+  image     String
+  excerpt   String   @db.Text
+  content   String   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+}
+
+model Partner {
+  id   String @id @default(cuid())
+  name String
+  logo String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------
+// FORM SUBMISSIONS — data collected FROM visitors, not shown TO them
+// ---------------------------------------------------------------------
+
+model ContactSubmission {
+  id        String           @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String           @db.Text
+  status    SubmissionStatus @default(NEW)
+  createdAt DateTime         @default(now())
+}
+
+model InspectionBooking {
+  id            String        @id @default(cuid())
+  name          String
+  email         String
+  phone         String
+  preferredDate DateTime
+  status        BookingStatus @default(PENDING)
+  notes         String?       @db.Text
+
+  listingId String?
+  listing   Listing? @relation(fields: [listingId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------
+// CMS AUTH — admin accounts only. Public site visitors never get an account.
+// ---------------------------------------------------------------------
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         AdminRole @default(EDITOR)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -6,7 +6,7 @@ Pairs with the React/Vite frontend in `../frontend`.
 ## Stack
 
 - **Runtime**: Node.js + Express
-- **Database**: PostgreSQL (via Prisma ORM) — added in Section 2
+- **Database**: PostgreSQL (via Prisma ORM)
 - **Auth**: JWT — added in Section 5
 
 ## Setup
@@ -15,6 +15,29 @@ Pairs with the React/Vite frontend in `../frontend`.
 cd backend
 npm install
 cp .env.example .env
+```
+
+### Database
+
+You need a local PostgreSQL running (install via [postgresapp.com](https://postgresapp.com) on Mac, or [postgresql.org/download](https://www.postgresql.org/download/) on Windows/Linux). Once it's running:
+
+```bash
+# create a database (name it whatever, just match .env)
+createdb faj_prime_dev
+```
+
+Update `DATABASE_URL` in `.env` to match your local Postgres credentials, then:
+
+```bash
+npm run db:migrate    # creates all tables from prisma/schema.prisma
+npm run db:generate   # generates the type-safe query client
+```
+
+`npm run db:studio` opens a visual browser at http://localhost:5555 where you can view/edit database rows without writing SQL — genuinely the easiest way to see what's in your database as a beginner.
+
+### Run the server
+
+```bash
 npm run dev
 ```
 
@@ -44,4 +67,6 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 1 — Project scaffolding** (health check endpoint only, no database yet).
+**Section 2 — Database design** (schema defined in `prisma/schema.prisma`, covering
+Listings, Agents, Projects, Services, Team, Testimonials, Blog Posts, Partners,
+Contact Submissions, Inspection Bookings, Newsletter, and Admin Users).
