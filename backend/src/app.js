@@ -1,8 +1,3 @@
-// app.js configures the Express application: middleware + routes.
-// server.js (separate file) is what actually starts it listening.
-// Splitting these two lets us import `app` directly in tests later
-// without needing a real network port open.
-
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -22,15 +17,15 @@ import partnerRoutes from "./routes/partner.routes.js";
 const app = express();
 
 // --- Security & parsing middleware ---
-app.use(helmet()); // sets safe HTTP headers
+app.use(helmet());
 app.use(
   cors({
-    origin: env.CLIENT_URL, // only her frontend is allowed to call this API
+    origin: env.CLIENT_URL,
     credentials: true,
-  })
+  }),
 );
-app.use(express.json()); // parses incoming JSON request bodies
-app.use(morgan(env.NODE_ENV === "development" ? "dev" : "combined")); // request logging
+app.use(express.json());
+app.use(morgan(env.NODE_ENV === "development" ? "dev" : "combined"));
 
 // --- Routes ---
 app.get("/", (req, res) => {
@@ -46,10 +41,6 @@ app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/partners", partnerRoutes);
 
-// More route groups (auth, admin CRUD, contact form, etc.) will be
-// mounted here in later sections.
-
-// --- Error handling (must be last) ---
 app.use(notFound);
 app.use(errorHandler);
 

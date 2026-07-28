@@ -20,7 +20,7 @@ export function serializeListing(l) {
     parking: l.parking,
     sqm: l.sqm,
     featured: l.featured,
-    agent: l.agentId, // frontend looks this up against a separate agents list
+    agent: l.agentId,
     description: l.description,
     amenities: l.amenities,
     images: l.images,
@@ -96,7 +96,7 @@ export function serializeBlogPost(b) {
     slug: b.slug,
     category: b.category,
     title: b.title,
-    date: b.date.toISOString().slice(0, 10), // matches "2026-06-12" string format
+    date: b.date.toISOString().slice(0, 10),
     readTime: b.readTime,
     author: b.author,
     image: b.image,
