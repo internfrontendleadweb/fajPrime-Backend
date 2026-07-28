@@ -1,16 +1,26 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import SectionHeading from "../ui/SectionHeading.jsx";
 import Button from "../ui/Button.jsx";
 import SliderNavButtons from "../ui/SliderNavButtons.jsx";
 import PropertyCard from "../cards/PropertyCard.jsx";
-import { listings } from "../../data/listings.js";
+import { api } from "../../services/api.js";
 import "swiper/css";
 
 export default function FeaturedListingsSlider() {
-  const featured = listings.filter((l) => l.featured);
+  const [featured, setFeatured] = useState([]);
   const prevRef = useRef(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getListings({ featured: true }).then((data) => {
+      if (!cancelled) setFeatured(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const nextRef = useRef(null);
 
   return (

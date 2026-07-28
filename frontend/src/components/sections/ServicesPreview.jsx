@@ -1,8 +1,21 @@
+import { useState, useEffect } from "react";
 import SectionHeading from "../ui/SectionHeading.jsx";
 import ServicesList from "./ServicesList.jsx";
-import { services } from "../../data/services.js";
+import { api } from "../../services/api.js";
 
 export default function ServicesPreview() {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getServices().then((data) => {
+      if (!cancelled) setServices(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const preview = services.slice(0, 6).map((s) => ({
     id: s.id,
     title: s.title,

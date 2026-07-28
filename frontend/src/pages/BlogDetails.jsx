@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { CalendarDays, Clock, User } from "lucide-react";
@@ -6,12 +7,40 @@ import ShareButtons from "../components/sections/ShareButtons.jsx";
 import RelatedItems from "../components/sections/RelatedItems.jsx";
 import NewsletterSignup from "../components/sections/NewsletterSignup.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
-import { blogPosts } from "../data/blogPosts.js";
+import { api } from "../services/api.js";
 import { formatDate } from "../utils/formatDate.js";
 
 export default function BlogDetails() {
   const { slug } = useParams();
-  const post = blogPosts.find((p) => p.slug === slug);
+  const [post, setPost] = useState(null);
+  const [related, setRelated] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+
+    api.getBlogPostBySlug(slug).then(async (found) => {
+      if (cancelled) return;
+      setPost(found);
+
+      if (found) {
+        const sameCategory = await api.getBlogPosts({ category: found.category });
+        if (cancelled) return;
+        setRelated(sameCategory.filter((p) => p.id !== found.id).slice(0, 3));
+      }
+
+      setLoading(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  if (loading) {
+    return <section className="pt-40 pb-20 container-custom min-h-[40vh]" />;
+  }
 
   if (!post) {
     return (
@@ -25,8 +54,6 @@ export default function BlogDetails() {
       </section>
     );
   }
-
-  const related = blogPosts.filter((p) => p.id !== post.id && p.category === post.category).slice(0, 3);
 
   return (
     <>

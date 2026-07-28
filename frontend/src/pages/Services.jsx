@@ -1,13 +1,26 @@
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { InnerHero } from "../components/sections/Hero.jsx";
 import SectionHeading from "../components/ui/SectionHeading.jsx";
 import ServiceCard from "../components/cards/ServiceCard.jsx";
 import CTABanner from "../components/sections/CTABanner.jsx";
-import { services } from "../data/services.js";
+import { api } from "../services/api.js";
 import { staggerContainer, fadeInUp } from "../animations/variants.js";
 
 export default function Services() {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getServices().then((data) => {
+      if (!cancelled) setServices(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <>
       <Helmet>

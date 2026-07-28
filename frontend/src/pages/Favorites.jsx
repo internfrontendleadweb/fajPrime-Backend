@@ -1,15 +1,30 @@
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { InnerHero } from "../components/sections/Hero.jsx";
 import PropertyCard from "../components/cards/PropertyCard.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
 import { useFavorites } from "../hooks/useFavorites.js";
-import { listings } from "../data/listings.js";
+import { api } from "../services/api.js";
 import { staggerContainer, fadeInUp } from "../animations/variants.js";
 
 export default function Favorites() {
   const { favorites } = useFavorites();
-  const savedProperties = listings.filter((l) => favorites.includes(l.id));
+  const [savedProperties, setSavedProperties] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (favorites.length === 0) {
+      setSavedProperties([]);
+      return;
+    }
+    api.getListings().then((all) => {
+      if (!cancelled) setSavedProperties(all.filter((l) => favorites.includes(l.id)));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [favorites]);
 
   return (
     <>

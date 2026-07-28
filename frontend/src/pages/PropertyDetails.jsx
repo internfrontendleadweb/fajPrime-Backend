@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -22,7 +23,7 @@ import RelatedItems from "../components/sections/RelatedItems.jsx";
 import Badge from "../components/ui/Badge.jsx";
 import Button from "../components/ui/Button.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
-import { listings, agents } from "../data/listings.js";
+import { api } from "../services/api.js";
 import { formatCurrency } from "../utils/formatCurrency.js";
 
 const nearbyPlaces = [
@@ -34,7 +35,40 @@ const nearbyPlaces = [
 
 export default function PropertyDetails() {
   const { slug } = useParams();
-  const property = listings.find((l) => l.slug === slug);
+  const [property, setProperty] = useState(null);
+  const [agent, setAgent] = useState(null);
+  const [related, setRelated] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+
+    api.getListingBySlug(slug).then(async (found) => {
+      if (cancelled) return;
+      setProperty(found);
+
+      if (found) {
+        const [agents, sameLocation] = await Promise.all([
+          api.getAgents(),
+          api.getListings({ location: found.location }),
+        ]);
+        if (cancelled) return;
+        setAgent(agents?.find((a) => a.id === found.agent) || null);
+        setRelated(sameLocation.filter((l) => l.id !== found.id).slice(0, 3));
+      }
+
+      setLoading(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  if (loading) {
+    return <section className="pt-40 pb-20 container-custom min-h-[40vh]" />;
+  }
 
   if (!property) {
     return (
@@ -48,11 +82,6 @@ export default function PropertyDetails() {
       </section>
     );
   }
-
-  const agent = agents.find((a) => a.id === property.agent);
-  const related = listings
-    .filter((l) => l.id !== property.id && l.location === property.location)
-    .slice(0, 3);
 
   const keyFacts = [
     { icon: BedDouble, label: "Bedrooms", value: property.bedrooms || "N/A" },

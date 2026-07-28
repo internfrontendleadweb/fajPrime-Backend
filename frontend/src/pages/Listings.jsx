@@ -22,17 +22,10 @@ const sortOptions = [
 ];
 
 export default function Listings() {
-  const { filters, updateFilter, clearFilters, filteredListings } = useFilteredListings();
+  const { filters, updateFilter, clearFilters, filteredListings, loading } = useFilteredListings();
   const [view, setView] = useState("grid");
   const [page, setPage] = useState(1);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 400);
-    return () => clearTimeout(timer);
-  }, [filters, page]);
 
   useEffect(() => {
     setPage(1);

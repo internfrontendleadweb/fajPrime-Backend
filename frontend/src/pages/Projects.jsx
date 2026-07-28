@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,7 +7,7 @@ import Tabs from "../components/ui/Tabs.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
 import ProjectCard from "../components/cards/ProjectCard.jsx";
 import CTABanner from "../components/sections/CTABanner.jsx";
-import { projects } from "../data/projects.js";
+import { api } from "../services/api.js";
 import { staggerContainer, fadeInUp } from "../animations/variants.js";
 
 const tabOptions = [
@@ -20,7 +20,22 @@ export default function Projects() {
   const [searchParams, setSearchParams] = useSearchParams();
   const status = searchParams.get("status") || "current";
 
-  const filtered = useMemo(() => projects.filter((p) => p.status === status), [status]);
+  const [filtered, setFiltered] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    api.getProjects(status).then((data) => {
+      if (!cancelled) {
+        setFiltered(data);
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [status]);
 
   const handleTabChange = (value) => {
     setSearchParams(value === "current" ? {} : { status: value });
@@ -50,7 +65,7 @@ export default function Projects() {
           </div>
 
           <AnimatePresence mode="wait">
-            {filtered.length ? (
+            {loading ? null : filtered.length ? (
               <motion.div
                 key={status}
                 initial="hidden"

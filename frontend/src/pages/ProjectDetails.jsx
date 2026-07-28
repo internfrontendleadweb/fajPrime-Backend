@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { MapPin, Building2, Layers, CalendarClock, CheckCircle2 } from "lucide-react";
@@ -6,13 +7,32 @@ import GalleryLightbox from "../components/sections/GalleryLightbox.jsx";
 import CTABanner from "../components/sections/CTABanner.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
 import Button from "../components/ui/Button.jsx";
-import { projects } from "../data/projects.js";
+import { api } from "../services/api.js";
 
 const statusLabel = { past: "Completed", current: "In Progress", future: "Upcoming" };
 
 export default function ProjectDetails() {
   const { slug } = useParams();
-  const project = projects.find((p) => p.slug === slug);
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    api.getProjectBySlug(slug).then((data) => {
+      if (!cancelled) {
+        setProject(data);
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  if (loading) {
+    return <section className="pt-40 pb-20 container-custom min-h-[40vh]" />;
+  }
 
   if (!project) {
     return (

@@ -4,8 +4,13 @@ Premium real estate website for FAJ Prime Estates Ltd., built with React + Vite 
 
 ## Setup
 
+This app now pulls all its content (listings, projects, services, team, blog,
+testimonials, partners) from the live backend API instead of local mock data.
+Make sure the backend (`../backend`) is running first — see its README.
+
 ```bash
 npm install
+cp .env.example .env   # points VITE_API_URL at your local backend
 npm run dev
 ```
 
@@ -20,8 +25,12 @@ npm run preview
 
 ## Status
 
-This is a work-in-progress build. Layout (Navbar, Footer, routing, mobile menu) is complete.
-Individual pages are currently placeholders and are being built out section by section.
+Layout (Navbar, Footer, routing, mobile menu) is complete. All content-facing
+pages and homepage sections now fetch real data from the backend API
+(listings, projects, services, team, blog, testimonials, partners) instead of
+local mock data — see `src/services/api.js` for the one seam connecting to it.
+`src/data/companyProfile.js` remains static (vision/mission/brand copy, not
+yet backend-modeled).
 
 ## Adding images
 

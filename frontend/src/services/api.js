@@ -1,57 +1,60 @@
-// This module is the single seam where mock data gets swapped for real API calls.
-// Every function currently resolves from local /src/data files, but the async
-// shape is identical to what a real fetch() call would return, so page
-// components never need to change when a backend is introduced.
+// This module is the single seam between the frontend and the backend.
+// Every function here calls the real Express API instead of local mock
+// data — return shapes are kept identical to what the mock version
+// returned, so page components consume it exactly the same way.
 
-import { listings } from "../data/listings";
-import { projects } from "../data/projects";
-import { services } from "../data/services";
-import { team } from "../data/team";
-import { blogPosts } from "../data/blogPosts";
-import { testimonials } from "../data/testimonials";
-import { partners } from "../data/partners";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
-const simulateDelay = (data, ms = 300) =>
-  new Promise((resolve) => setTimeout(() => resolve(data), ms));
+async function request(path) {
+  const res = await fetch(`${API_URL}${path}`);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API error ${res.status}: ${path}`);
+  return res.json();
+}
+
+function toQueryString(params = {}) {
+  const usable = Object.entries(params).filter(
+    ([, v]) => v !== undefined && v !== null && v !== ""
+  );
+  if (usable.length === 0) return "";
+  return "?" + new URLSearchParams(usable).toString();
+}
 
 export const api = {
-  getListings: (filters = {}) => simulateDelay(applyListingFilters(listings, filters)),
-  getListingBySlug: (slug) => simulateDelay(listings.find((l) => l.slug === slug) || null),
+  // limit=100 fetches the full matching set — pages currently do their
+  // own client-side pagination/sorting rather than server-side.
+  getListings: async (filters = {}) => {
+    const qs = toQueryString({ ...filters, limit: 100 });
+    const result = await request(`/listings${qs}`);
+    return result?.data || [];
+  },
+  getListingBySlug: (slug) => request(`/listings/${slug}`),
+  getAgents: () => request(`/listings/agents`),
 
-  getProjects: (status) =>
-    simulateDelay(status ? projects.filter((p) => p.status === status) : projects),
-  getProjectBySlug: (slug) => simulateDelay(projects.find((p) => p.slug === slug) || null),
+  getProjects: (status) => request(`/projects${toQueryString({ status })}`),
+  getProjectBySlug: (slug) => request(`/projects/${slug}`),
 
-  getServices: () => simulateDelay(services),
-  getServiceBySlug: (slug) => simulateDelay(services.find((s) => s.slug === slug) || null),
+  getServices: () => request(`/services`),
+  getServiceBySlug: (slug) => request(`/services/${slug}`),
 
-  getTeam: () => simulateDelay(team),
+  getTeam: () => request(`/team`),
 
-  getBlogPosts: () => simulateDelay(blogPosts),
-  getBlogPostBySlug: (slug) => simulateDelay(blogPosts.find((b) => b.slug === slug) || null),
+  getBlogPosts: async (filters = {}) => {
+    const qs = toQueryString({ ...filters, limit: 100 });
+    const result = await request(`/blog${qs}`);
+    return result?.data || [];
+  },
+  getBlogPostBySlug: (slug) => request(`/blog/${slug}`),
 
-  getTestimonials: () => simulateDelay(testimonials),
-  getPartners: () => simulateDelay(partners),
+  getTestimonials: () => request(`/testimonials`),
+  getPartners: () => request(`/partners`),
 
-  submitContactForm: (payload) => simulateDelay({ success: true, payload }, 800),
-  submitInspectionBooking: (payload) => simulateDelay({ success: true, payload }, 800),
-  subscribeNewsletter: (email) => simulateDelay({ success: true, email }, 500),
+  // Form submission endpoints are built in Section 4 — these still
+  // simulate success for now so the forms remain functional in the UI.
+  submitContactForm: (payload) =>
+    new Promise((resolve) => setTimeout(() => resolve({ success: true, payload }), 800)),
+  submitInspectionBooking: (payload) =>
+    new Promise((resolve) => setTimeout(() => resolve({ success: true, payload }), 800)),
+  subscribeNewsletter: (email) =>
+    new Promise((resolve) => setTimeout(() => resolve({ success: true, email }), 500)),
 };
-
-function applyListingFilters(data, filters) {
-  return data.filter((item) => {
-    if (filters.location && item.location !== filters.location) return false;
-    if (filters.type && item.type !== filters.type) return false;
-    if (filters.status && item.status !== filters.status) return false;
-    if (filters.bedrooms && item.bedrooms < Number(filters.bedrooms)) return false;
-    if (filters.minPrice && item.price < Number(filters.minPrice)) return false;
-    if (filters.maxPrice && item.price > Number(filters.maxPrice)) return false;
-    if (filters.query) {
-      const q = filters.query.toLowerCase();
-      if (!item.title.toLowerCase().includes(q) && !item.location.toLowerCase().includes(q)) {
-        return false;
-      }
-    }
-    return true;
-  });
-}
