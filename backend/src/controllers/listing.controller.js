@@ -1,14 +1,24 @@
 import { prisma } from "../config/db.js";
 import { serializeListing, serializeAgent } from "../utils/serializers.js";
-import { toEnum, listingTypeReverse, listingStatusReverse } from "../utils/enumMaps.js";
+import {
+  toEnum,
+  listingTypeReverse,
+  listingStatusReverse,
+} from "../utils/enumMaps.js";
 
 // GET /api/listings
-// Supports the same filters the frontend's mock applyListingFilters() did:
-// location, type, status, bedrooms (minimum), minPrice, maxPrice, query (search),
-// plus featured, and page/limit for pagination (new — mock data had no pagination
-// since it was only ever 14 hardcoded rows).
+
 export const getListings = async (req, res) => {
-  const { location, type, status, bedrooms, minPrice, maxPrice, query, featured } = req.query;
+  const {
+    location,
+    type,
+    status,
+    bedrooms,
+    minPrice,
+    maxPrice,
+    query,
+    featured,
+  } = req.query;
   const page = Math.max(1, parseInt(req.query.page) || 1);
   const limit = Math.min(100, parseInt(req.query.limit) || 12);
 
@@ -51,13 +61,14 @@ export const getListings = async (req, res) => {
 
 // GET /api/listings/:slug
 export const getListingBySlug = async (req, res) => {
-  const listing = await prisma.listing.findUnique({ where: { slug: req.params.slug } });
+  const listing = await prisma.listing.findUnique({
+    where: { slug: req.params.slug },
+  });
   if (!listing) return res.status(404).json({ error: "Listing not found" });
   res.json(serializeListing(listing));
 };
 
-// GET /api/listings/agents — supporting endpoint for the property details page,
-// which needs to look up an agent by the id stored on a listing.
+// GET /api/listings/agents
 export const getAgents = async (req, res) => {
   const agents = await prisma.agent.findMany({ orderBy: { name: "asc" } });
   res.json(agents.map(serializeAgent));
