@@ -1,14 +1,25 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "../ui/SectionHeading.jsx";
 import Button from "../ui/Button.jsx";
 import BlogCard from "../cards/BlogCard.jsx";
-import { blogPosts } from "../../data/blogPosts.js";
+import { api } from "../../services/api.js";
 import { staggerContainer, fadeInUp } from "../../animations/variants.js";
 
 export default function LatestBlog() {
-  const latest = [...blogPosts]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 3);
+  const [latest, setLatest] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getBlogPosts().then((data) => {
+      if (!cancelled) {
+        setLatest([...data].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3));
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="py-section-lg bg-white">

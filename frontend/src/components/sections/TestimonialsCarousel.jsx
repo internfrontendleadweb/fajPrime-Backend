@@ -4,7 +4,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import SectionHeading from "../ui/SectionHeading.jsx";
-import { testimonials } from "../../data/testimonials.js";
+import { api } from "../../services/api.js";
 import "swiper/css";
 import "swiper/css/effect-fade";
 
@@ -13,12 +13,25 @@ const AUTOPLAY_MS = 6000;
 export default function TestimonialsCarousel() {
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [testimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getTestimonials().then((data) => {
+      if (!cancelled) setTestimonials(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Drives the thin progress bar in sync with autoplay.
   const [progressKey, setProgressKey] = useState(0);
   useEffect(() => setProgressKey((k) => k + 1), [activeIndex]);
 
   const active = testimonials[activeIndex];
+
+  if (!active) return null;
 
   return (
     <section className="relative py-section-lg bg-navy-900 overflow-hidden">

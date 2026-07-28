@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Target, Eye, Sparkles, CheckCircle2, Quote } from "lucide-react";
@@ -8,9 +9,9 @@ import StatsCounter from "../components/sections/StatsCounter.jsx";
 import CTABanner from "../components/sections/CTABanner.jsx";
 import Button from "../components/ui/Button.jsx";
 import { fadeInUp, slideInLeft, slideInRight, staggerContainer } from "../animations/variants.js";
-import { team } from "../data/team.js";
 import { siteConfig } from "../constants/siteConfig.js";
 import { companyStory, vision, mission, coreValues, whyChooseUs, competitiveAdvantage } from "../data/companyProfile.js";
+import { api } from "../services/api.js";
 
 const timelineItems = [
   { year: "2014", title: "Founded as UDSREALTY Nigeria Limited", description: "Began as a trusted real estate solutions provider, connecting clients with quality property investments across Lagos." },
@@ -27,9 +28,19 @@ const stats = [
   { value: "8+", label: "Years of Excellence" },
 ];
 
-const chairman = team.find((t) => t.id === "tm-01");
-
 export default function About() {
+  const [chairman, setChairman] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getTeam().then((team) => {
+      if (!cancelled) setChairman(team.find((t) => t.id === "tm-01") || null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <>
       <Helmet>

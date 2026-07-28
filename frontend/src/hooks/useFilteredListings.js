@@ -1,10 +1,14 @@
-import { useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { listings } from "../data/listings";
+import { api } from "../services/api.js";
 
 export function useFilteredListings() {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsString = searchParams.toString();
+
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const filters = useMemo(
     () => ({
@@ -33,26 +37,53 @@ export function useFilteredListings() {
 
   const clearFilters = () => setSearchParams({});
 
-  const filteredListings = useMemo(() => {
-    let result = listings.filter((item) => {
-      if (filters.location && item.location !== filters.location) return false;
-      if (filters.type && item.type !== filters.type) return false;
-      if (filters.status && item.status !== filters.status) return false;
-      if (filters.bedrooms && item.bedrooms < Number(filters.bedrooms)) return false;
-      if (filters.minPrice && item.price < Number(filters.minPrice)) return false;
-      if (filters.maxPrice && item.price > Number(filters.maxPrice)) return false;
-      if (filters.query) {
-        const q = filters.query.toLowerCase();
-        if (
-          !item.title.toLowerCase().includes(q) &&
-          !item.location.toLowerCase().includes(q)
-        ) {
-          return false;
-        }
-      }
-      return true;
-    });
+  // Filtering (location, type, status, bedrooms, price range, search)
+  // now happens server-side in the API. Sort stays client-side since
+  // the backend doesn't support a sort param yet.
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
 
+    api
+      .getListings({
+        location: filters.location,
+        type: filters.type,
+        status: filters.status,
+        bedrooms: filters.bedrooms,
+        minPrice: filters.minPrice,
+        maxPrice: filters.maxPrice,
+        query: filters.query,
+      })
+      .then((data) => {
+        if (cancelled) return;
+        setListings(data);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setError(err);
+        setListings([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    filters.location,
+    filters.type,
+    filters.status,
+    filters.bedrooms,
+    filters.minPrice,
+    filters.maxPrice,
+    filters.query,
+  ]);
+
+  const filteredListings = useMemo(() => {
+    let result = listings;
     switch (filters.sort) {
       case "price-asc":
         result = [...result].sort((a, b) => a.price - b.price);
@@ -63,10 +94,8 @@ export function useFilteredListings() {
       default:
         break;
     }
-
     return result;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, [listings, filters.sort]);
 
-  return { filters, updateFilter, clearFilters, filteredListings };
+  return { filters, updateFilter, clearFilters, filteredListings, loading, error };
 }

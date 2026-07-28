@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
@@ -7,12 +8,31 @@ import { InnerHero } from "../components/sections/Hero.jsx";
 import FAQAccordion from "../components/sections/FAQAccordion.jsx";
 import CTABanner from "../components/sections/CTABanner.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
-import { services } from "../data/services.js";
+import { api } from "../services/api.js";
 import { staggerContainer, fadeInUp } from "../animations/variants.js";
 
 export default function ServiceDetails() {
   const { slug } = useParams();
-  const service = services.find((s) => s.slug === slug);
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    api.getServiceBySlug(slug).then((data) => {
+      if (!cancelled) {
+        setService(data);
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  if (loading) {
+    return <section className="pt-40 pb-20 container-custom min-h-[40vh]" />;
+  }
 
   if (!service) {
     return (

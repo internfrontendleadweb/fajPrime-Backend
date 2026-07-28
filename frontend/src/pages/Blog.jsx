@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,21 +8,40 @@ import BlogCard from "../components/cards/BlogCard.jsx";
 import NewsletterSignup from "../components/sections/NewsletterSignup.jsx";
 import Pagination from "../components/ui/Pagination.jsx";
 import EmptyState from "../components/ui/EmptyState.jsx";
-import { blogPosts } from "../data/blogPosts.js";
+import { api } from "../services/api.js";
 import { formatShortDate } from "../utils/formatDate.js";
 import { staggerContainer, fadeInUp } from "../animations/variants.js";
 
 const PAGE_SIZE = 6;
-const categories = ["All", ...new Set(blogPosts.map((p) => p.category))];
 
 export default function Blog() {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    let cancelled = false;
+    api.getBlogPosts().then((data) => {
+      if (!cancelled) {
+        setBlogPosts(data);
+        setLoading(false);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const categories = useMemo(
+    () => ["All", ...new Set(blogPosts.map((p) => p.category))],
+    [blogPosts]
+  );
+
   const sorted = useMemo(
     () => [...blogPosts].sort((a, b) => new Date(b.date) - new Date(a.date)),
-    []
+    [blogPosts]
   );
   const featured = sorted[0];
   const popular = sorted.slice(1, 4);
@@ -37,6 +56,10 @@ export default function Blog() {
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  if (loading) {
+    return <section className="pt-40 pb-20 container-custom min-h-[40vh]" />;
+  }
 
   return (
     <>

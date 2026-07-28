@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { CheckCircle2, Send } from "lucide-react";
 import Input from "../ui/Input.jsx";
@@ -8,12 +9,23 @@ import TimePicker from "../ui/TimePicker.jsx";
 import Button from "../ui/Button.jsx";
 import { validators } from "../../utils/validators.js";
 import { locations } from "../../constants/locations.js";
-import { listings } from "../../data/listings.js";
 import { api } from "../../services/api.js";
 
 const inspectionTypes = ["Private Viewing", "Group Tour", "Virtual Inspection"];
 
 export default function InspectionBookingForm() {
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getListings().then((data) => {
+      if (!cancelled) setListings(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const {
     register,
     handleSubmit,

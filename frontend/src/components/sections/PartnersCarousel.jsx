@@ -1,7 +1,20 @@
-import { partners } from "../../data/partners.js";
+import { useState, useEffect } from "react";
+import { api } from "../../services/api.js";
 import PartnerLogo from "../cards/PartnerLogo.jsx";
 
 export default function PartnersCarousel() {
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getPartners().then((data) => {
+      if (!cancelled) setPartners(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // Duplicate list for seamless infinite scroll illusion
   const loopedPartners = [...partners, ...partners];
 

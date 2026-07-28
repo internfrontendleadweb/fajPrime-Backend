@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "../ui/SectionHeading.jsx";
 import Tabs from "../ui/Tabs.jsx";
 import Button from "../ui/Button.jsx";
 import EditorialShowcase from "./EditorialShowcase.jsx";
-import { projects } from "../../data/projects.js";
+import { api } from "../../services/api.js";
 
 const tabOptions = [
   { value: "current", label: "Current" },
@@ -16,11 +16,21 @@ const statusLabel = { past: "Completed", current: "In Progress", future: "Upcomi
 
 export default function ProjectsPreview() {
   const [status, setStatus] = useState("current");
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    api.getProjects(status).then((data) => {
+      if (!cancelled) setProjects(data);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [status]);
 
   const items = useMemo(
     () =>
       projects
-        .filter((p) => p.status === status)
         .slice(0, 4)
         .map((p) => ({
           id: p.id,
