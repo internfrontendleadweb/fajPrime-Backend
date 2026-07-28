@@ -11,6 +11,13 @@ import morgan from "morgan";
 import { env } from "./config/env.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import healthRoutes from "./routes/health.routes.js";
+import listingRoutes from "./routes/listing.routes.js";
+import projectRoutes from "./routes/project.routes.js";
+import serviceRoutes from "./routes/service.routes.js";
+import teamRoutes from "./routes/team.routes.js";
+import testimonialRoutes from "./routes/testimonial.routes.js";
+import blogRoutes from "./routes/blog.routes.js";
+import partnerRoutes from "./routes/partner.routes.js";
 
 const app = express();
 
@@ -31,10 +38,16 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/health", healthRoutes);
+app.use("/api/listings", listingRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/services", serviceRoutes);
+app.use("/api/team", teamRoutes);
+app.use("/api/testimonials", testimonialRoutes);
+app.use("/api/blog", blogRoutes);
+app.use("/api/partners", partnerRoutes);
 
-// More route groups (listings, projects, blog, auth, etc.) will be
-// mounted here in later sections, e.g.:
-// app.use("/api/listings", listingRoutes);
+// More route groups (auth, admin CRUD, contact form, etc.) will be
+// mounted here in later sections.
 
 // --- Error handling (must be last) ---
 app.use(notFound);
