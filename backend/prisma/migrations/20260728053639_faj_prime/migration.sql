@@ -87,7 +87,7 @@ CREATE TABLE "Service" (
     "shortDescription" TEXT NOT NULL,
     "benefits" TEXT[],
     "process" TEXT[],
-    "faqs" JSONB,
+    "faqs" JSONB NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
