@@ -7,6 +7,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 import { env } from "./config/env.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
@@ -21,6 +22,7 @@ import partnerRoutes from "./routes/partner.routes.js";
 import contactRoutes from "./routes/contact.routes.js";
 import inspectionRoutes from "./routes/inspection.routes.js";
 import newsletterRoutes from "./routes/newsletter.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 
@@ -38,6 +40,7 @@ app.use(
   })
 );
 app.use(express.json()); // parses incoming JSON request bodies
+app.use(cookieParser()); // parses cookies into req.cookies (needed to read the auth session cookie)
 app.use(morgan(env.NODE_ENV === "development" ? "dev" : "combined")); // request logging
 
 // --- Routes ---
@@ -56,9 +59,10 @@ app.use("/api/partners", partnerRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/inspections", inspectionRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/auth", authRoutes);
 
-// More route groups (auth, admin CRUD, etc.) will be mounted here in
-// later sections.
+// More route groups (admin CRUD, etc.) will be mounted here in later
+// sections.
 
 // --- Error handling (must be last) ---
 app.use(notFound);

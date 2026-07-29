@@ -12,3 +12,15 @@ export const writeLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many submissions from this device. Please try again later." },
 });
+
+// Login attempts get their own, slightly more generous limiter (typos
+// happen) but this is still the single most important endpoint to
+// rate-limit — it's the #1 brute-force target on any site with an
+// admin panel.
+export const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many login attempts. Please try again in 15 minutes." },
+});

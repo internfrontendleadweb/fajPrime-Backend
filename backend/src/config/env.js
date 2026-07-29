@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const required = ["PORT", "NODE_ENV", "CLIENT_URL", "DATABASE_URL"];
+const required = ["PORT", "NODE_ENV", "CLIENT_URL", "DATABASE_URL", "JWT_SECRET"];
 
 for (const key of required) {
   if (!process.env[key]) {
@@ -26,6 +26,10 @@ export const env = {
   RESEND_API_KEY: process.env.RESEND_API_KEY || "",
   EMAIL_FROM: process.env.EMAIL_FROM || "FAJ Prime Estates <onboarding@resend.dev>",
   ADMIN_NOTIFICATION_EMAIL: process.env.ADMIN_NOTIFICATION_EMAIL || "",
+  // Auth
+  JWT_SECRET: process.env.JWT_SECRET || "dev-only-insecure-secret-change-me",
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d",
+  COOKIE_NAME: "faj_prime_session",
 };
 
 export const isProduction = env.NODE_ENV === "production";
