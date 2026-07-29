@@ -213,13 +213,16 @@ model ContactSubmission {
 }
 
 model InspectionBooking {
-  id            String        @id @default(cuid())
-  name          String
-  email         String
-  phone         String
-  preferredDate DateTime
-  status        BookingStatus @default(PENDING)
-  notes         String?       @db.Text
+  id             String        @id @default(cuid())
+  name           String
+  email          String
+  phone          String
+  location       String?
+  preferredDate  DateTime
+  preferredTime  String?
+  inspectionType String?
+  status         BookingStatus @default(PENDING)
+  notes          String?       @db.Text
 
   listingId String?
   listing   Listing? @relation(fields: [listingId], references: [id])

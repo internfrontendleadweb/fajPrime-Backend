@@ -75,6 +75,28 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 2 — Database design** (schema defined in `prisma/schema.prisma`, covering
-Listings, Agents, Projects, Services, Team, Testimonials, Blog Posts, Partners,
-Contact Submissions, Inspection Bookings, Newsletter, and Admin Users).
+**Section 4 — Write endpoints** (`POST /api/contact`, `POST /api/inspections`,
+`POST /api/newsletter` — all validated with Zod, rate-limited, honeypot spam
+protection, and sending email notifications via Resend).
+
+## Email notifications
+
+Contact form and inspection bookings send two emails each: a notification to
+`ADMIN_NOTIFICATION_EMAIL` and a confirmation to the person who submitted.
+
+- Sign up free at [resend.com](https://resend.com), get an API key
+- Without `RESEND_API_KEY` set, emails are just logged to the console instead
+  of sent — safe default for local development, nothing breaks
+- Resend's `onboarding@resend.dev` sender works without domain verification
+  for testing; for production, verify your real domain in Resend's dashboard
+
+## Spam protection on public forms
+
+Every write endpoint (`/api/contact`, `/api/inspections`, `/api/newsletter`)
+has two layers:
+- **Rate limiting**: 5 submissions per 15 minutes per IP
+- **Honeypot field**: include a `website` field in the request body that's
+  hidden via CSS in the actual form (real visitors never see or fill it). If
+  it arrives non-empty, the submission is silently faked as successful —
+  nothing is saved, no email sent, and the bot gets no indication it was
+  caught.
