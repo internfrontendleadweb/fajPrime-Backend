@@ -75,9 +75,37 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 4 — Write endpoints** (`POST /api/contact`, `POST /api/inspections`,
-`POST /api/newsletter` — all validated with Zod, rate-limited, honeypot spam
-protection, and sending email notifications via Resend).
+**Section 5 — Authentication** (JWT-based admin login via httpOnly cookie,
+`requireAuth` middleware ready to protect the admin CMS routes built next).
+
+## Authentication
+
+Single admin role for now (no permission tiers yet). Auth uses a JWT stored
+in an httpOnly cookie — the frontend never touches the token directly; the
+browser sends it automatically on every request to this API.
+
+**Create your first admin user:**
+```bash
+npm run admin:create
+```
+This prompts interactively for name, email, and password (min 8 characters) —
+there's no public signup page on purpose, admin accounts are created
+deliberately via this script, not self-registered.
+
+**Required env var:**
+```
+JWT_SECRET=
+```
+Generate a real one with `openssl rand -base64 32` — never reuse this value
+across projects, and never commit a real one to git.
+
+**Endpoints:**
+- `POST /api/auth/login` — `{ email, password }` → sets session cookie
+- `POST /api/auth/logout` — clears the session cookie
+- `GET /api/auth/me` — returns the logged-in admin's info (401 if not logged in)
+
+Login is rate-limited (10 attempts / 15 min per IP) since it's the most
+common brute-force target on any site with an admin panel.
 
 ## Email notifications
 
