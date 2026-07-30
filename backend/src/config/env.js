@@ -1,9 +1,3 @@
-// Centralized place to read environment variables.
-// Every other file should import from here instead of calling
-// process.env directly — this way, if a variable is missing,
-// we find out immediately on startup instead of deep inside some
-// random controller at 2am in production.
-
 import dotenv from "dotenv";
 
 dotenv.config();
