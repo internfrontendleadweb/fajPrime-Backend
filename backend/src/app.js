@@ -18,6 +18,7 @@ import contactRoutes from "./routes/contact.routes.js";
 import inspectionRoutes from "./routes/inspection.routes.js";
 import newsletterRoutes from "./routes/newsletter.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
 
 const app = express();
 
@@ -56,9 +57,10 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/inspections", inspectionRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 
-// More route groups (admin CRUD, etc.) will be mounted here in later
-// sections.
+// More route groups (submissions/bookings management, etc.) will be
+// mounted here in the next batch.
 
 // --- Error handling (must be last) ---
 app.use(notFound);
