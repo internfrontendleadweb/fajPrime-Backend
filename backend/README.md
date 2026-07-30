@@ -75,9 +75,46 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 6, Batch 2 — Admin CMS backend, submissions management** (viewing
-and managing Contact Submissions, Inspection Bookings, and Newsletter
-Subscribers). Section 6 is now complete; Section 7 (Image uploads) is next.
+**Section 7 — Image uploads** (real file upload via Cloudinary, replacing
+the "paste a URL" approach from Section 6).
+
+## Image uploads (Section 7)
+
+### One-time Cloudinary setup
+1. Sign up free at [cloudinary.com](https://cloudinary.com) — no card required
+2. Your **Dashboard** page (first thing you see after signup) shows three values: **Cloud Name**, **API Key**, **API Secret**
+3. Paste them into `.env`:
+   ```
+   CLOUDINARY_CLOUD_NAME=
+   CLOUDINARY_API_KEY=
+   CLOUDINARY_API_SECRET=
+   ```
+Without these set, `POST /api/admin/upload` returns a clear `503` telling you they're missing — nothing crashes.
+
+### Endpoints
+```
+POST   /api/admin/upload              multipart/form-data, field name "image"
+                                       optional field/query "folder": hero | projects | properties | partners | team | blog
+                                       (unrecognized folder falls back to "misc")
+DELETE /api/admin/upload/:publicId
+```
+
+`POST /api/admin/upload` returns:
+```json
+{ "url": "https://res.cloudinary.com/.../image.webp", "publicId": "faj-prime/properties/abc123", "width": 1600, "height": 1067 }
+```
+Take that `url` and use it as the `images`/`image`/`logo` field value when
+creating or updating any content resource from Section 6.
+
+### Limits
+- Max file size: 8MB
+- Accepted types: JPEG, PNG, WebP, AVIF
+- Files are streamed directly to Cloudinary from memory — never saved to
+  this server's disk (Render's filesystem is wiped on every redeploy anyway,
+  so nothing would persist there regardless)
+- Cloudinary auto-optimizes format/quality on delivery (`quality: auto`,
+  `fetch_format: auto`) — no need to run the frontend's image-optimization
+  script on admin-uploaded images
 
 ## Managing submissions/bookings (Batch 2)
 

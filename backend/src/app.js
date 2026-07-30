@@ -63,8 +63,7 @@ app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 
-// More route groups (submissions/bookings management, etc.) will be
-// mounted here in the next batch.
+// More route groups will be mounted here in later sections.
 
 // --- Error handling (must be last) ---
 app.use(notFound);

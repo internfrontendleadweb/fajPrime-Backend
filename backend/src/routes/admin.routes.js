@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { requireAuth } from "../middleware/auth.js";
+import { upload, handleUploadError } from "../middleware/upload.js";
+import { uploadImage, deleteImage } from "../controllers/upload.controller.js";
 import {
   listingAdmin,
   projectAdmin,
@@ -63,5 +65,12 @@ router.delete("/inspections/:id", asyncHandler(deleteInspectionBooking));
 router.get("/newsletter/export.csv", asyncHandler(exportNewsletterSubscribers));
 router.get("/newsletter", asyncHandler(listNewsletterSubscribers));
 router.delete("/newsletter/:id", asyncHandler(deleteNewsletterSubscriber));
+
+// --- Image uploads (Cloudinary) ---
+// handleUploadError must sit directly after upload.single(), so any
+// error multer throws (wrong file type, too large) gets caught here
+// before it ever reaches the controller.
+router.post("/upload", upload.single("image"), handleUploadError, asyncHandler(uploadImage));
+router.delete("/upload/:publicId", asyncHandler(deleteImage));
 
 export default router;

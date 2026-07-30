@@ -30,6 +30,10 @@ export const env = {
   JWT_SECRET: process.env.JWT_SECRET || "dev-only-insecure-secret-change-me",
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d",
   COOKIE_NAME: "faj_prime_session",
+  // Image uploads (Cloudinary)
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || "",
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || "",
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || "",
 };
 
 export const isProduction = env.NODE_ENV === "production";
