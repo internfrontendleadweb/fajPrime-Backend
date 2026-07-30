@@ -1,3 +1,8 @@
+// app.js configures the Express application: middleware + routes.
+// server.js (separate file) is what actually starts it listening.
+// Splitting these two lets us import `app` directly in tests later
+// without needing a real network port open.
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -28,14 +33,13 @@ const app = express();
 app.set("trust proxy", 1);
 
 // --- Security & parsing middleware ---
-app.use(helmet());
+app.use(helmet()); // sets safe HTTP headers
 app.use(
   cors({
-    origin: env.CLIENT_URL,
+    origin: env.CLIENT_URL, // only her frontend is allowed to call this API
     credentials: true,
-  }),
+  })
 );
-
 app.use(express.json()); // parses incoming JSON request bodies
 app.use(cookieParser()); // parses cookies into req.cookies (needed to read the auth session cookie)
 app.use(morgan(env.NODE_ENV === "development" ? "dev" : "combined")); // request logging
