@@ -75,8 +75,43 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 5 — Authentication** (JWT-based admin login via httpOnly cookie,
-`requireAuth` middleware ready to protect the admin CMS routes built next).
+**Section 6, Batch 1 — Admin CMS backend, content CRUD** (Create/Update/Delete
+for Listings, Projects, Services, Team Members, Testimonials, Blog Posts,
+Partners, and Agents — all protected by login). Batch 2 (managing Contact
+Submissions, Inspection Bookings, and Newsletter Subscribers) is next.
+
+## Admin CMS endpoints
+
+Every route below requires being logged in (see Authentication section
+above) — no separate API key or header needed, just the session cookie set
+by `/api/auth/login`.
+
+Reading content still goes through the public routes from Section 3
+(`GET /api/listings`, etc.) — the CMS UI reuses those for viewing/listing.
+These new routes only handle creating, editing, and deleting:
+
+```
+POST   /api/admin/listings          PUT /api/admin/listings/:id       DELETE /api/admin/listings/:id
+POST   /api/admin/projects          PUT /api/admin/projects/:id       DELETE /api/admin/projects/:id
+POST   /api/admin/services          PUT /api/admin/services/:id       DELETE /api/admin/services/:id
+POST   /api/admin/team              PUT /api/admin/team/:id           DELETE /api/admin/team/:id
+POST   /api/admin/testimonials      PUT /api/admin/testimonials/:id   DELETE /api/admin/testimonials/:id
+POST   /api/admin/blog              PUT /api/admin/blog/:id           DELETE /api/admin/blog/:id
+POST   /api/admin/partners          PUT /api/admin/partners/:id       DELETE /api/admin/partners/:id
+POST   /api/admin/agents            PUT /api/admin/agents/:id         DELETE /api/admin/agents/:id
+```
+
+Notes:
+- **Slugs are auto-generated** from the title on create (e.g. "Luxury Duplex"
+  → `luxury-duplex`), and auto-uniquified if that slug is already taken
+  (`luxury-duplex-2`, etc.) — you can also pass your own `slug` field to
+  override this.
+- **Type/status/group fields** use the same human-readable strings as the
+  public API ("Duplex", "For Sale", "board") — not the raw database enum
+  names. An unrecognized value returns a clear 400 error naming the bad field.
+- **Images are plain URL/path strings for now** (paste a path like
+  `/images/properties/my-photo.webp`) — real file upload via Cloudinary is
+  a later section.
 
 ## Authentication
 
