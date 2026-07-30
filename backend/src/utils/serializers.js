@@ -112,3 +112,42 @@ export function serializePartner(p) {
     logo: p.logo,
   };
 }
+
+export function serializeContactSubmission(c) {
+  return {
+    id: c.id,
+    name: c.name,
+    email: c.email,
+    phone: c.phone,
+    subject: c.subject,
+    message: c.message,
+    status: c.status, // NEW / CONTACTED / CLOSED - shown as-is, admin-only field, no public display mapping needed
+    createdAt: c.createdAt,
+  };
+}
+
+export function serializeInspectionBooking(b) {
+  return {
+    id: b.id,
+    name: b.name,
+    email: b.email,
+    phone: b.phone,
+    location: b.location,
+    preferredDate: b.preferredDate,
+    preferredTime: b.preferredTime,
+    inspectionType: b.inspectionType,
+    status: b.status, // PENDING / CONFIRMED / COMPLETED / CANCELLED
+    notes: b.notes,
+    listingId: b.listingId,
+    listing: b.listing ? { id: b.listing.id, title: b.listing.title, slug: b.listing.slug } : null,
+    createdAt: b.createdAt,
+  };
+}
+
+export function serializeNewsletterSubscriber(s) {
+  return {
+    id: s.id,
+    email: s.email,
+    subscribedAt: s.subscribedAt,
+  };
+}

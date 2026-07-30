@@ -11,6 +11,17 @@ import {
   partnerAdmin,
   agentAdmin,
 } from "../controllers/admin.controllers.js";
+import {
+  listContactSubmissions,
+  updateContactSubmissionStatus,
+  deleteContactSubmission,
+  listInspectionBookings,
+  updateInspectionBooking,
+  deleteInspectionBooking,
+  listNewsletterSubscribers,
+  exportNewsletterSubscribers,
+  deleteNewsletterSubscriber,
+} from "../controllers/submissions.admin.controller.js";
 
 const router = Router();
 
@@ -34,5 +45,23 @@ mountCrud("/testimonials", testimonialAdmin);
 mountCrud("/blog", blogAdmin);
 mountCrud("/partners", partnerAdmin);
 mountCrud("/agents", agentAdmin);
+
+// --- Contact submissions (list/update-status/delete only - created by
+// the public contact form, never created here) ---
+router.get("/contact-submissions", asyncHandler(listContactSubmissions));
+router.patch("/contact-submissions/:id", asyncHandler(updateContactSubmissionStatus));
+router.delete("/contact-submissions/:id", asyncHandler(deleteContactSubmission));
+
+// --- Inspection bookings ---
+router.get("/inspections", asyncHandler(listInspectionBookings));
+router.patch("/inspections/:id", asyncHandler(updateInspectionBooking));
+router.delete("/inspections/:id", asyncHandler(deleteInspectionBooking));
+
+// --- Newsletter subscribers ---
+// IMPORTANT: /export.csv must be registered before /:id, otherwise
+// Express would try to treat "export.csv" as an :id value.
+router.get("/newsletter/export.csv", asyncHandler(exportNewsletterSubscribers));
+router.get("/newsletter", asyncHandler(listNewsletterSubscribers));
+router.delete("/newsletter/:id", asyncHandler(deleteNewsletterSubscriber));
 
 export default router;

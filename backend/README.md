@@ -75,10 +75,33 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 6, Batch 1 — Admin CMS backend, content CRUD** (Create/Update/Delete
-for Listings, Projects, Services, Team Members, Testimonials, Blog Posts,
-Partners, and Agents — all protected by login). Batch 2 (managing Contact
-Submissions, Inspection Bookings, and Newsletter Subscribers) is next.
+**Section 6, Batch 2 — Admin CMS backend, submissions management** (viewing
+and managing Contact Submissions, Inspection Bookings, and Newsletter
+Subscribers). Section 6 is now complete; Section 7 (Image uploads) is next.
+
+## Managing submissions/bookings (Batch 2)
+
+Unlike the content resources above, these are never created through the
+admin API — they're created by visitors via the public forms (Section 4).
+Admin can only view, update status, and delete.
+
+```
+GET    /api/admin/contact-submissions?status=NEW&page=1&limit=20
+PATCH  /api/admin/contact-submissions/:id     { "status": "CONTACTED" }
+DELETE /api/admin/contact-submissions/:id
+
+GET    /api/admin/inspections?status=PENDING&page=1&limit=20
+PATCH  /api/admin/inspections/:id             { "status": "CONFIRMED", "notes": "..." }
+DELETE /api/admin/inspections/:id
+
+GET    /api/admin/newsletter?page=1&limit=50
+GET    /api/admin/newsletter/export.csv        (downloads a CSV of all subscribers)
+DELETE /api/admin/newsletter/:id
+```
+
+Valid statuses:
+- Contact: `NEW`, `CONTACTED`, `CLOSED`
+- Inspection: `PENDING`, `CONFIRMED`, `COMPLETED`, `CANCELLED`
 
 ## Admin CMS endpoints
 

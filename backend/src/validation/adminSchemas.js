@@ -106,3 +106,17 @@ export const agentCreateSchema = z.object({
   photo: optionalUrlOrPath,
 });
 export const agentUpdateSchema = agentCreateSchema.partial();
+
+// --- Status updates for submissions/bookings (admin-only fields) ---
+export const contactStatusSchema = z.object({
+  status: z.enum(["NEW", "CONTACTED", "CLOSED"], {
+    message: "Status must be one of: NEW, CONTACTED, CLOSED",
+  }),
+});
+
+export const inspectionStatusSchema = z.object({
+  status: z.enum(["PENDING", "CONFIRMED", "COMPLETED", "CANCELLED"], {
+    message: "Status must be one of: PENDING, CONFIRMED, COMPLETED, CANCELLED",
+  }),
+  notes: z.string().trim().max(2000).optional(),
+});
