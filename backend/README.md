@@ -75,8 +75,28 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 7 — Image uploads** (real file upload via Cloudinary, replacing
-the "paste a URL" approach from Section 6).
+**Section 8 — SEO & performance**. Section 9 (security hardening) is next.
+
+## SEO & performance (Section 8)
+
+- `GET /sitemap.xml` — dynamically generated from real database content
+  (every listing, project, service, and blog post), so new content becomes
+  crawlable automatically without editing a static file
+- `GET /robots.txt` — points crawlers at the sitemap, disallows `/admin`
+- **Gzip compression** on every response (via `compression`)
+- **Cache-Control headers** on public content routes: 60s for
+  listings/projects/blog (change often), 300s for services/team/
+  testimonials/partners (change rarely)
+- **General API rate limiter** (300 req/15min per IP) on public content
+  routes, on top of the stricter limiters already on write/login endpoints
+
+Set `PUBLIC_SITE_URL` in `.env` to your real frontend domain once it's live
+(e.g. `https://fajprimeestates.com`) — this is what the sitemap uses to build
+absolute URLs. Defaults to `http://localhost:5173` for local dev.
+
+Note on structured data (JSON-LD/schema.org): that has to live in the
+frontend's rendered HTML `<head>`, since search engines read served pages,
+not this API's raw JSON — nothing to build here on the backend for that part.
 
 ## Image uploads (Section 7)
 

@@ -8,9 +8,14 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import compression from "compression";
 
 import { env } from "./config/env.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
+import { cacheControl } from "./middleware/cache.js";
+import { publicApiLimiter } from "./middleware/rateLimiter.js";
+import { asyncHandler } from "./utils/asyncHandler.js";
+import { getSitemap, getRobots } from "./controllers/seo.controller.js";
 import healthRoutes from "./routes/health.routes.js";
 import listingRoutes from "./routes/listing.routes.js";
 import projectRoutes from "./routes/project.routes.js";
@@ -34,6 +39,7 @@ app.set("trust proxy", 1);
 
 // --- Security & parsing middleware ---
 app.use(helmet()); // sets safe HTTP headers
+app.use(compression()); // gzip-compresses every response - smaller payloads, faster page loads
 app.use(
   cors({
     origin: env.CLIENT_URL, // only her frontend is allowed to call this API
@@ -49,14 +55,21 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to the FAJ Prime Estates API" });
 });
 
+app.get("/sitemap.xml", asyncHandler(getSitemap));
+app.get("/robots.txt", getRobots);
+
 app.use("/api/health", healthRoutes);
-app.use("/api/listings", listingRoutes);
-app.use("/api/projects", projectRoutes);
-app.use("/api/services", serviceRoutes);
-app.use("/api/team", teamRoutes);
-app.use("/api/testimonials", testimonialRoutes);
-app.use("/api/blog", blogRoutes);
-app.use("/api/partners", partnerRoutes);
+// Public content routes: cached for 60s (repeat requests within that
+// window are served without hitting the database) and rate-limited
+// generously (normal browsing makes plenty of requests; this only
+// stops a script from hammering the API).
+app.use("/api/listings", publicApiLimiter, cacheControl(60), listingRoutes);
+app.use("/api/projects", publicApiLimiter, cacheControl(60), projectRoutes);
+app.use("/api/services", publicApiLimiter, cacheControl(300), serviceRoutes); // services change rarely - cache longer
+app.use("/api/team", publicApiLimiter, cacheControl(300), teamRoutes);
+app.use("/api/testimonials", publicApiLimiter, cacheControl(300), testimonialRoutes);
+app.use("/api/blog", publicApiLimiter, cacheControl(60), blogRoutes);
+app.use("/api/partners", publicApiLimiter, cacheControl(300), partnerRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/inspections", inspectionRoutes);
 app.use("/api/newsletter", newsletterRoutes);

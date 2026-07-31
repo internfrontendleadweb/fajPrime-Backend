@@ -24,3 +24,15 @@ export const authLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: "Too many login attempts. Please try again in 15 minutes." },
 });
+
+// A general limiter for public read traffic (listings, blog, etc.) —
+// much more generous than the write/login limiters since normal
+// browsing legitimately makes many requests, but still stops a script
+// from hammering the API with thousands of requests a minute.
+export const publicApiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests. Please slow down and try again shortly." },
+});
