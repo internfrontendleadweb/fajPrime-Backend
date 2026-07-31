@@ -40,4 +40,16 @@ export const env = {
   PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL || "http://localhost:5173",
 };
 
+// CORS needs to allow requests from BOTH your live frontend domain AND
+// localhost during local development, at the same time — not one or
+// the other. This combines CLIENT_URL + PUBLIC_SITE_URL (deduplicated),
+// plus anything extra listed in ALLOWED_ORIGINS (comma-separated) for
+// cases like a staging domain later.
+const extraOrigins = (process.env.ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+export const allowedOrigins = [...new Set([env.CLIENT_URL, env.PUBLIC_SITE_URL, ...extraOrigins])];
+
 export const isProduction = env.NODE_ENV === "production";

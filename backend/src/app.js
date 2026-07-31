@@ -9,8 +9,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import compression from "compression";
+import hpp from "hpp";
 
-import { env } from "./config/env.js";
+import { env, allowedOrigins } from "./config/env.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
 import { cacheControl } from "./middleware/cache.js";
 import { publicApiLimiter } from "./middleware/rateLimiter.js";
@@ -42,10 +43,21 @@ app.use(helmet()); // sets safe HTTP headers
 app.use(compression()); // gzip-compresses every response - smaller payloads, faster page loads
 app.use(
   cors({
-    origin: env.CLIENT_URL, // only her frontend is allowed to call this API
+    // A function instead of a fixed string, so BOTH your live domain
+    // and localhost work at the same time — not one or the other.
+    // Requests with no Origin header (curl, server-to-server, mobile
+    // apps) are allowed through since CORS only matters to browsers
+    // anyway; it's not a meaningful security boundary for those callers.
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    },
     credentials: true,
   })
 );
+app.use(hpp()); // strips duplicate query params (e.g. ?status=A&status=B) - stops a class of parameter-pollution attacks
 app.use(express.json()); // parses incoming JSON request bodies
 app.use(cookieParser()); // parses cookies into req.cookies (needed to read the auth session cookie)
 app.use(morgan(env.NODE_ENV === "development" ? "dev" : "combined")); // request logging

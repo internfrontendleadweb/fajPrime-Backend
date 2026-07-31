@@ -75,7 +75,24 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 8 — SEO & performance**. Section 9 (security hardening) is next.
+**Section 9 — Security hardening**. Section 10 (automated testing) is next.
+
+## Security hardening (Section 9)
+
+- **Multi-origin CORS**: allows requests from `CLIENT_URL` (local dev) and
+  `PUBLIC_SITE_URL` (your live frontend) simultaneously, not one or the
+  other — plus anything extra in `ALLOWED_ORIGINS` (comma-separated, e.g.
+  a future staging domain). Any other origin is rejected.
+- **HTTP Parameter Pollution protection** (`hpp`) — strips duplicate query
+  params like `?status=A&status=B` before they reach a controller.
+- **XSS sanitization on public form input**: the Contact form and
+  Inspection booking fields (name, subject, message, location, etc.) are
+  stripped of any HTML/script tags on the way in, before ever touching
+  the database. This is defense-in-depth — React already escapes text by
+  default — but there's no reason to store raw `<script>` tags for a
+  field that's supposed to be plain text.
+- Error responses never leak stack traces (already true since Section 1 —
+  confirmed still correct here)
 
 ## SEO & performance (Section 8)
 
