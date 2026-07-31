@@ -52,7 +52,9 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+      const err = new Error(`Origin ${origin} is not allowed by CORS`);
+      err.status = 403;
+      callback(err);
     },
     credentials: true,
   })
