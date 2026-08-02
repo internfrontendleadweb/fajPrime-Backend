@@ -75,7 +75,29 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 9 — Security hardening**. Section 10 (automated testing) is next.
+**Section 10 — Automated testing**. Section 11 (deployment) is next.
+
+## Testing (Section 10)
+
+```bash
+npm test
+```
+
+Covers the most critical paths: the full auth flow (login, wrong password,
+protected routes, logout), full admin CRUD on Listings (create, validation
+rejection, invalid-enum rejection, update, delete, and confirming changes
+show up on/disappear from the public read endpoint), and smoke tests across
+every public read endpoint.
+
+**Important: these tests run against whatever `DATABASE_URL` is in your
+`.env`** — almost certainly your local dev database. They do **not** wipe
+it. Each test creates its own uniquely-named records (a random suffix per
+run) and cleans up exactly what it created afterward, so it's safe to run
+against a database with real seeded content as many times as you like.
+
+Tests run sequentially (not in parallel) since they share one real database
+rather than mocking Prisma — a deliberate tradeoff of a little speed for
+reliably reproducible results.
 
 ## Security hardening (Section 9)
 
