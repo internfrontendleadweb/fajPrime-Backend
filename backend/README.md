@@ -75,7 +75,8 @@ backend/
 ## Status
 
 Work in progress, built section by section alongside Claude. Currently at:
-**Section 10 — Automated testing**. Section 11 (deployment) is next.
+**Section 11 — Deployment**. Section 12 (handover docs) is next, then the
+admin CMS dashboard UI.
 
 ## Testing (Section 10)
 
@@ -282,3 +283,72 @@ has two layers:
   it arrives non-empty, the submission is silently faked as successful —
   nothing is saved, no email sent, and the bot gets no indication it was
   caught.
+
+## Deployment (Section 11)
+
+Two ways to do this — pick whichever you're more comfortable with. Both end
+up in the exact same place.
+
+### Option A: Render Blueprint (one step)
+1. Push this repo to GitHub if it isn't already
+2. Render dashboard → **New** → **Blueprint** → connect this repo
+3. Render reads `render.yaml` (at the repo root) and creates both the
+   database and web service automatically
+4. Once created, go to the web service's **Environment** tab and add the
+   variables listed at the bottom of `render.yaml` (JWT_SECRET, etc. — see
+   below for what each one needs)
+
+### Option B: Manual setup
+**1. Create the database first:**
+- Render dashboard → **New** → **PostgreSQL**
+- Name it anything (e.g. `faj-prime-db`), free plan is fine to start
+- Once created, copy the **Internal Database URL** shown on its page
+
+**2. Create the web service:**
+- Render dashboard → **New** → **Web Service** → connect this repo
+- **Root Directory**: `backend`
+- **Runtime**: Node
+- **Build Command**: `npm install && npx prisma migrate deploy`
+- **Start Command**: `npm start`
+- **Health Check Path**: `/api/health`
+
+**3. Set environment variables** (web service → **Environment** tab):
+
+| Key | Value |
+|---|---|
+| `NODE_ENV` | `production` |
+| `DATABASE_URL` | the Internal Database URL from step 1 |
+| `JWT_SECRET` | generate with `openssl rand -base64 32` — a real one, not the dev fallback |
+| `PUBLIC_SITE_URL` | `https://fajprimeestates.com` (your real frontend domain) |
+| `CLIENT_URL` | same as `PUBLIC_SITE_URL` in production (this var exists mainly for local dev, where it's `http://localhost:5173`) |
+| `RESEND_API_KEY` | from resend.com |
+| `EMAIL_FROM` | e.g. `FAJ Prime Estates <onboarding@resend.dev>` |
+| `ADMIN_NOTIFICATION_EMAIL` | wherever your team should receive form notifications |
+| `CLOUDINARY_CLOUD_NAME` | from your Cloudinary dashboard |
+| `CLOUDINARY_API_KEY` | from your Cloudinary dashboard |
+| `CLOUDINARY_API_SECRET` | from your Cloudinary dashboard |
+
+Don't set `PORT` — Render provides this automatically, and `src/config/env.js`
+already reads whatever value it's given.
+
+**4. Create your first production admin.** Render's dashboard has a **Shell**
+tab on the web service, once it's deployed:
+```bash
+npm run admin:create
+```
+Run this there (not on your local machine — this creates the admin in the
+*production* database).
+
+### How the build works
+- `npm install` triggers `postinstall` automatically, which runs
+  `prisma generate` — so the query client is always freshly generated on
+  every deploy without a separate manual step
+- `npx prisma migrate deploy` (part of the Build Command, not `migrate dev`)
+  applies any pending migrations non-interactively — the production-safe
+  equivalent of what `npm run db:migrate` does locally
+
+### Known tradeoff: free tier cold starts
+Render's free web service plan spins down after ~15 minutes of no traffic.
+The first request after that idle period takes 30-60 seconds to wake back
+up — expected free-tier behavior, not a bug. If that's a problem for a live
+client demo, Render's paid "Starter" tier keeps it always-on.

@@ -1,0 +1,33 @@
+# Render Blueprint — optional infrastructure-as-code setup.
+# You can use this to spin up both the web service and database in one
+# step (Render dashboard → New → Blueprint → point at this repo), or
+# just follow the manual steps in backend/README.md's Deployment
+# section instead — both approaches end up in the same place.
+
+databases:
+  - name: faj-prime-db
+    plan: free
+    databaseName: faj_prime
+    user: faj_prime
+
+services:
+  - type: web
+    name: faj-prime-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install && npx prisma migrate deploy
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: faj-prime-db
+          property: connectionString
+      # Everything below this line has no safe default and must be
+      # set manually in the Render dashboard after the blueprint runs:
+      # JWT_SECRET, PUBLIC_SITE_URL, CLIENT_URL, RESEND_API_KEY,
+      # EMAIL_FROM, ADMIN_NOTIFICATION_EMAIL, CLOUDINARY_CLOUD_NAME,
+      # CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
