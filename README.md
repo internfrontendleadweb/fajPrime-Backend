@@ -3,6 +3,10 @@
 Node.js + Express + PostgreSQL API and CMS backend for the FAJ Prime Estates
 real estate website.
 
+**Live**: https://faj-prime-api.onrender.com
+**Docs**: see `backend/README.md` for the full handover reference, and
+`backend/API.md` for the complete endpoint-by-endpoint API reference.
+
 ## Repo history note
 
 This repo originally held both the frontend and backend as a monorepo
@@ -21,7 +25,7 @@ When the frontend and backend are ready to be connected for real:
 ## Setup
 
 See `backend/README.md` for full setup instructions (database, environment
-variables, running locally).
+variables, running locally, deployment, troubleshooting).
 
 ```bash
 cd backend
@@ -30,5 +34,6 @@ cp .env.example .env
 npm run db:migrate
 npm run db:generate
 npm run db:seed
+npm run admin:create
 npm run dev
 ```
