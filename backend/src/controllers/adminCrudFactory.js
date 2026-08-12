@@ -1,5 +1,6 @@
 import { prisma } from "../config/db.js";
 import { slugify, ensureUniqueSlug } from "../utils/slug.js";
+import { removeTrackedUrlsIfUnused } from "../utils/mediaAssets.js";
 
 // Builds { create, update, remove } controllers for a given Prisma
 // model. Every admin content resource (Listing, Project, Service,
@@ -18,8 +19,9 @@ import { slugify, ensureUniqueSlug } from "../utils/slug.js";
 //   toDbFields  - function(parsedBody) -> object ready for prisma (e.g.
 //                 translates display-string enums to DB enum values)
 //   hasSlug     - if true, auto-generates/uniquifies a slug from `title`
-export function createAdminCrud({ modelName, schema, updateSchema, serialize, toDbFields, hasSlug = false }) {
+export function createAdminCrud({ modelName, schema, updateSchema, serialize, toDbFields, hasSlug = false, imageFields = [] }) {
   const model = prisma[modelName];
+  const imageUrls = (record) => imageFields.flatMap((field) => Array.isArray(record?.[field]) ? record[field] : record?.[field] ? [record[field]] : []);
 
   const create = async (req, res) => {
     const parsed = schema.safeParse(req.body);
@@ -65,8 +67,11 @@ export function createAdminCrud({ modelName, schema, updateSchema, serialize, to
     }
 
     try {
+      const previous = imageFields.length ? await model.findUnique({ where: { id } }) : null;
       const updated = await model.update({ where: { id }, data });
       res.json(serialize(updated));
+      const remaining = new Set(imageUrls(updated));
+      void removeTrackedUrlsIfUnused(imageUrls(previous).filter((url) => !remaining.has(url)));
     } catch (err) {
       handlePrismaError(err, res);
     }
@@ -75,8 +80,9 @@ export function createAdminCrud({ modelName, schema, updateSchema, serialize, to
   const remove = async (req, res) => {
     const { id } = req.params;
     try {
-      await model.delete({ where: { id } });
+      const deleted = await model.delete({ where: { id } });
       res.status(204).send();
+      void removeTrackedUrlsIfUnused(imageUrls(deleted));
     } catch (err) {
       handlePrismaError(err, res);
     }

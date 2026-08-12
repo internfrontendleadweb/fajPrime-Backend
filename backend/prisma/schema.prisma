@@ -237,6 +237,16 @@ model NewsletterSubscriber {
   subscribedAt DateTime @default(now())
 }
 
+// Every file uploaded through the admin is tracked separately from content.
+// This lets the API safely remove a Cloudinary asset only after confirming no
+// content record still uses its delivery URL.
+model MediaAsset {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  publicId  String   @unique
+  createdAt DateTime @default(now())
+}
+
 // ---------------------------------------------------------------------
 // CMS AUTH — admin accounts only. Public site visitors never get an account.
 // ---------------------------------------------------------------------

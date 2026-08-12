@@ -57,6 +57,7 @@ export const listingAdmin = createAdminCrud({
   updateSchema: listingUpdateSchema,
   serialize: serializeListing,
   hasSlug: true,
+  imageFields: ["images"],
   toDbFields: (data, res) => {
     const out = { ...data };
     if (out.agentId === "") delete out.agentId;
@@ -81,6 +82,7 @@ export const projectAdmin = createAdminCrud({
   updateSchema: projectUpdateSchema,
   serialize: serializeProject,
   hasSlug: true,
+  imageFields: ["images"],
   toDbFields: (data, res) => {
     const out = { ...data };
     if (out.status !== undefined) {
@@ -107,6 +109,7 @@ export const teamAdmin = createAdminCrud({
   schema: teamCreateSchema,
   updateSchema: teamUpdateSchema,
   serialize: serializeTeamMember,
+  imageFields: ["image"],
   toDbFields: (data, res) => {
     const out = { ...data };
     if (out.linkedin === "") delete out.linkedin;
@@ -125,6 +128,7 @@ export const testimonialAdmin = createAdminCrud({
   schema: testimonialCreateSchema,
   updateSchema: testimonialUpdateSchema,
   serialize: serializeTestimonial,
+  imageFields: ["image"],
 });
 
 // --- Blog Posts ---
@@ -134,6 +138,7 @@ export const blogAdmin = createAdminCrud({
   updateSchema: blogUpdateSchema,
   serialize: serializeBlogPost,
   hasSlug: true,
+  imageFields: ["image"],
 });
 
 // --- Partners ---
@@ -142,6 +147,7 @@ export const partnerAdmin = createAdminCrud({
   schema: partnerCreateSchema,
   updateSchema: partnerUpdateSchema,
   serialize: serializePartner,
+  imageFields: ["logo"],
 });
 
 // --- Agents ---
@@ -150,6 +156,7 @@ export const agentAdmin = createAdminCrud({
   schema: agentCreateSchema,
   updateSchema: agentUpdateSchema,
   serialize: serializeAgent,
+  imageFields: ["photo"],
   toDbFields: (data) => {
     const out = { ...data };
     if (out.photo === "") delete out.photo;

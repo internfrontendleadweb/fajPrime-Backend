@@ -1,5 +1,7 @@
 import { isCloudinaryConfigured } from "../config/cloudinary.js";
-import { uploadBuffer, deleteByPublicId, resolveFolder } from "../utils/cloudinaryUpload.js";
+import { uploadBuffer, resolveFolder } from "../utils/cloudinaryUpload.js";
+import { prisma } from "../config/db.js";
+import { removeTrackedAssetIfUnused } from "../utils/mediaAssets.js";
 
 // POST /api/admin/upload  (multipart/form-data, field name "image")
 // Optional body/query field "folder" - one of ALLOWED_FOLDERS, falls
@@ -17,6 +19,7 @@ export const uploadImage = async (req, res) => {
 
   const folder = resolveFolder(req.body.folder || req.query.folder);
   const result = await uploadBuffer(req.file.buffer, folder);
+  await prisma.mediaAsset.create({ data: { url: result.secure_url, publicId: result.public_id } });
 
   res.status(201).json({
     url: result.secure_url,
@@ -26,20 +29,15 @@ export const uploadImage = async (req, res) => {
   });
 };
 
-// DELETE /api/admin/upload/:publicId
-// :publicId arrives URL-encoded since Cloudinary public IDs contain
-// slashes (e.g. faj-prime/properties/abc123).
+// DELETE /api/admin/upload/:publicId only deletes a tracked, currently unused
+// asset. It cannot be used to remove arbitrary Cloudinary files.
 export const deleteImage = async (req, res) => {
   if (!isCloudinaryConfigured) {
     return res.status(503).json({ error: "Image upload isn't configured yet." });
   }
 
-  const publicId = decodeURIComponent(req.params.publicId);
-  const result = await deleteByPublicId(publicId);
-
-  if (result.result !== "ok" && result.result !== "not found") {
-    return res.status(500).json({ error: "Failed to delete image from Cloudinary" });
-  }
+  const deleted = await removeTrackedAssetIfUnused({ publicId: decodeURIComponent(req.params.publicId) });
+  if (!deleted) return res.status(409).json({ error: "This image is still in use or is not managed by this application." });
 
   res.status(204).send();
 };
