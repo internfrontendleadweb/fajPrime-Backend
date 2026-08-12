@@ -34,6 +34,7 @@ export function serializeAgent(a) {
     role: a.role,
     phone: a.phone,
     email: a.email,
+    photo: a.photo,
   };
 }
 
@@ -139,7 +140,9 @@ export function serializeInspectionBooking(b) {
     status: b.status, // PENDING / CONFIRMED / COMPLETED / CANCELLED
     notes: b.notes,
     listingId: b.listingId,
-    listing: b.listing ? { id: b.listing.id, title: b.listing.title, slug: b.listing.slug } : null,
+    listing: b.listing
+      ? { id: b.listing.id, title: b.listing.title, slug: b.listing.slug }
+      : null,
     createdAt: b.createdAt,
   };
 }
