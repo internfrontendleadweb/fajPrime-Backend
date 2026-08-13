@@ -107,6 +107,7 @@ Copy `.env.example` to `.env` and fill in. Full reference:
 | `NODE_ENV` | Yes | `development` or `production` |
 | `DATABASE_URL` | Yes | Postgres connection string. **External Render connections need `?sslmode=require` appended** |
 | `CLIENT_URL` | Yes | Your frontend's origin — `http://localhost:5173` locally, your real domain in production |
+| `ADMIN_URL` | Yes | Your separate admin dashboard origin — `http://localhost:5174` locally, its real deployed domain in production |
 | `PUBLIC_SITE_URL` | Yes | Your real live frontend domain (used for sitemap URLs + allowed as a CORS origin alongside `CLIENT_URL`) |
 | `ALLOWED_ORIGINS` | No | Comma-separated extra CORS origins (e.g. a staging domain) |
 | `JWT_SECRET` | Yes | Generate with `openssl rand -base64 32`. Never reuse across projects |

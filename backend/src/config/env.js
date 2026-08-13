@@ -20,6 +20,9 @@ export const env = {
   PORT: process.env.PORT || 4000,
   NODE_ENV: process.env.NODE_ENV || "development",
   CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5173",
+  // The separately deployed CMS dashboard. This must be an explicit
+  // CORS origin because it sends credentialed admin-session requests.
+  ADMIN_URL: process.env.ADMIN_URL || "http://localhost:5174",
   DATABASE_URL: process.env.DATABASE_URL,
   // Email is optional — if RESEND_API_KEY is unset, src/utils/email.js
   // logs to the console instead of sending, so nothing breaks without it.
@@ -50,6 +53,8 @@ const extraOrigins = (process.env.ALLOWED_ORIGINS || "")
   .map((o) => o.trim())
   .filter(Boolean);
 
-export const allowedOrigins = [...new Set([env.CLIENT_URL, env.PUBLIC_SITE_URL, ...extraOrigins])];
+export const allowedOrigins = [
+  ...new Set([env.CLIENT_URL, env.PUBLIC_SITE_URL, env.ADMIN_URL, ...extraOrigins]),
+];
 
 export const isProduction = env.NODE_ENV === "production";
